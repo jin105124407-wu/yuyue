@@ -1,0 +1,22 @@
+<view class="points">
+  <view class="content">
+    <view class="points-hero">
+      <view><text class="points-num">0 积分</text><text>积分功能暂未开放</text></view>
+      <view class="gift-mark">礼</view>
+    </view>
+    <view class="task-list card">
+      <text class="task-title">积分任务</text>
+      <view class="task"><text>完善个人资料</text><text class="tag">暂未开放</text></view>
+      <view class="task"><text>完成一次预约</text><text class="tag">暂未开放</text></view>
+      <view class="task"><text>参与推荐有礼</text><text class="tag">暂未开放</text></view>
+    </view>
+    <view class="empty-card card">
+      <view>
+        <view class="empty-icon">礼</view>
+        <text class="empty-title">积分专区暂未开放</text>
+        <text class="empty-desc">后续可用于兑换护理福利</text>
+        <button class="btn" bindtap="goHome">返回首页</button>
+      </view>
+    </view>
+  </view>
+</view>

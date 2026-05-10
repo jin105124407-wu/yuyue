@@ -1,0 +1,13 @@
+<view class="mall">
+  <view class="content">
+    <view class="search"><text class="icon">⌕</text><text>搜索商品</text></view>
+    <view class="empty-card card">
+      <view>
+        <view class="empty-icon">袋</view>
+        <text class="empty-title">商城暂未开放</text>
+        <text class="empty-desc">护理产品与套餐服务即将上线</text>
+        <button class="btn" bindtap="goHome">返回首页</button>
+      </view>
+    </view>
+  </view>
+</view>

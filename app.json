@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/booking/booking",
+    "pages/mall/mall",
+    "pages/member-code/member-code",
+    "pages/points/points",
+    "pages/referral/referral",
+    "pages/mine/mine",
+    "pages/mine/points-detail/points-detail",
+    "pages/mine/profile-edit/profile-edit",
+    "pages/mine/booking-history/booking-history",
+    "pages/admin/home/home",
+    "pages/admin/orders/orders",
+    "pages/admin/services/services",
+    "pages/admin/staff/staff",
+    "pages/privacy/privacy",
+    "pages/login/login"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f2f7f1",
+    "navigationBarTitleText": "Moyo Beauty",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#9AA5A0",
+    "selectedColor": "#5F7F73",
+    "backgroundColor": "#ffffff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/mall/mall", "text": "商城" },
+      { "pagePath": "pages/member-code/member-code", "text": "会员码" },
+      { "pagePath": "pages/points/points", "text": "积分专区" },
+      { "pagePath": "pages/mine/mine", "text": "我的" },
+      { "pagePath": "pages/admin/home/home", "text": "工作台" },
+      { "pagePath": "pages/admin/orders/orders", "text": "订单" },
+      { "pagePath": "pages/admin/services/services", "text": "项目" },
+      { "pagePath": "pages/admin/staff/staff", "text": "美容师" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

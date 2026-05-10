@@ -1,0 +1,61 @@
+<view class="mine">
+  <view class="content">
+    <view class="my-hero">
+      <view class="member-card">
+        <view class="member-emblem"></view>
+        <view class="member-main">
+          <image class="avatar member-avatar" src="{{displayAvatar || '/assets/images/login-avatar-eastern.png'}}" mode="aspectFill"></image>
+          <view class="member-copy">
+            <view class="user-row">
+              <text class="user-name">你好，{{displayName}}</text>
+              <text class="tag">{{displayLevel}}</text>
+            </view>
+            <text wx:if="{{isLogged}}" class="muted">已登录{{displayPhone ? ' · ' + displayPhone : ''}}</text>
+            <text wx:else class="muted">登录后可查看护理记录</text>
+          </view>
+        </view>
+        <view class="member-divider"></view>
+        <text class="member-upgrade">{{isLogged ? '当前账号已绑定，可查看预约、积分和护理记录' : '当前为普通用户，可通过预约护理解锁更多专属服务'}}</text>
+      </view>
+    </view>
+
+    <view class="stats">
+      <view class="stat"><text class="num">{{activeBookingCount}}</text><text>预约数</text></view>
+      <view class="stat"><text class="num">0</text><text>优惠券</text></view>
+      <view class="stat"><text class="num">{{user.points ? user.points : 0}}</text><text>积分</text></view>
+    </view>
+
+    <view class="feature-card card">
+      <text class="feature-title">预约服务</text>
+      <view class="feature-grid service-grid">
+        <view class="feature" bindtap="goBookingHistory"><view class="circle"><view class="feature-icon icon-calendar"></view></view><text>我的预约</text></view>
+        <view class="feature" bindtap="goBooking"><view class="circle"><view class="feature-icon icon-doc"></view></view><text>在线预约</text></view>
+        <view class="feature" bindtap="callService"><view class="circle"><view class="feature-icon icon-headset"></view></view><text>联系客服</text></view>
+        <view class="feature" bindtap="openMap"><view class="circle"><view class="feature-icon icon-pin"></view></view><text>门店导航</text></view>
+      </view>
+    </view>
+
+    <view class="feature-card card">
+      <text class="feature-title">其他服务</text>
+      <view class="feature-grid other-grid">
+        <view class="feature" bindtap="showProfileTip"><view class="circle"><view class="feature-icon icon-user"></view></view><text>完善资料</text></view>
+        <view class="feature" bindtap="showReferralTip"><view class="circle"><view class="feature-icon icon-gift"></view></view><text>推荐有礼</text></view>
+        <view class="feature" bindtap="showRewardTip"><view class="circle"><view class="feature-icon icon-doc"></view></view><text>参与任务</text></view>
+        <view class="feature" bindtap="goMall"><view class="circle"><view class="feature-icon icon-bag"></view></view><text>商城</text></view>
+        <view class="feature" bindtap="goPoints"><view class="circle"><view class="feature-icon icon-points"></view></view><text>积分专区</text></view>
+      </view>
+    </view>
+
+    <button class="btn secondary full logout" bindtap="onResetLogin">退出登录</button>
+  </view>
+
+  <view class="service-modal" wx:if="{{showServiceModal}}" bindtap="closeServiceModal">
+    <view class="modal-content" catchtap="stopBubble">
+      <view class="modal-title">联系客服</view>
+      <view class="modal-phone" bindtap="callDirect">13632684631</view>
+      <view class="modal-divider"></view>
+      <view class="modal-call-btn" bindtap="callDirect">呼叫</view>
+      <view class="modal-cancel" bindtap="closeServiceModal">取消</view>
+    </view>
+  </view>
+</view>

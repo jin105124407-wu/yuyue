@@ -1,0 +1,38 @@
+/* ================================================
+   隐私条款页 — 清晰简洁
+   ================================================ */
+.privacy {
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--card-bg);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  display: block;
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  color: var(--text-primary);
+}
+.h {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 28rpx 0 14rpx;
+  color: var(--text-primary);
+}
+.p {
+  display: block;
+  font-size: var(--text-md);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 6rpx 0;
+}
+.muted {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin-top: 48rpx;
+  text-align: center;
+  line-height: 1.6;
+}

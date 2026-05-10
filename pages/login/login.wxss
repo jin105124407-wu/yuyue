@@ -1,0 +1,182 @@
+page {
+  background: #ffffff;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 84rpx 56rpx 112rpx;
+  background:
+    radial-gradient(circle at 50% 32%, rgba(242, 247, 241, 0.82), rgba(255, 255, 255, 0) 34%),
+    #fff;
+  color: var(--text);
+}
+
+.login-page.phone,
+.login-page.birthday {
+  justify-content: flex-start;
+  padding-top: 256rpx;
+}
+
+.login-page.profile {
+  justify-content: flex-start;
+  padding-top: 260rpx;
+}
+
+.login-identity {
+  text-align: center;
+}
+
+.login-mark {
+  width: 216rpx;
+  height: 216rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 40rpx;
+  border-radius: 26rpx;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(95, 127, 115, 0.96), rgba(63, 98, 88, 0.96)),
+    radial-gradient(circle at 22% 20%, rgba(244, 232, 200, 0.45), transparent 28%);
+  box-shadow: 0 24rpx 50rpx rgba(63, 98, 88, 0.16);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30rpx;
+  line-height: 1.22;
+  letter-spacing: 1.6rpx;
+}
+
+.login-title {
+  display: block;
+  margin: 0;
+  text-align: center;
+  font-size: 48rpx;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.auth-form {
+  width: 100%;
+  margin-top: 152rpx;
+}
+
+.login-page.birthday .auth-form {
+  margin-top: 172rpx;
+}
+
+.login-page.profile .auth-form {
+  margin-top: 132rpx;
+}
+
+.auth-copy {
+  display: block;
+  margin: 0 0 32rpx;
+  color: #333;
+  font-size: 32rpx;
+  line-height: 1.55;
+}
+
+.auth-field {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 28rpx;
+  border: 1rpx solid #dde1df;
+  border-radius: 12rpx;
+  color: var(--text);
+  background: #fff;
+  font-size: 30rpx;
+  text-align: left;
+}
+
+.auth-field.placeholder {
+  color: #a6aaa8;
+}
+
+.auth-tip {
+  display: block;
+  margin: 18rpx 4rpx 0;
+  color: var(--muted);
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.auth-primary {
+  margin-top: 36rpx;
+  border-radius: 12rpx;
+  background: #aebdba;
+  font-size: 36rpx;
+  box-shadow: none;
+}
+
+.auth-primary.ready {
+  background: var(--brand);
+}
+
+.finish {
+  margin-top: 42rpx;
+}
+
+.zodiac-line {
+  margin-top: 22rpx;
+  min-height: 42rpx;
+  color: var(--text-2);
+  font-size: 28rpx;
+}
+
+.age-note {
+  display: block;
+  margin-top: 26rpx;
+  color: var(--muted);
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.profile-avatar {
+  width: 208rpx;
+  height: 208rpx;
+  margin: 0 auto 44rpx;
+  border: 6rpx solid #eef1ef;
+  border-radius: 999rpx;
+  background: url("/assets/images/login-avatar-eastern.png") center 42% / cover no-repeat;
+  box-shadow: 0 36rpx 68rpx rgba(90, 112, 104, 0.14);
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 28rpx 0 0;
+  color: var(--text-2);
+  font-size: 28rpx;
+}
+
+.checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  display: grid;
+  place-items: center;
+  border: 3rpx solid #ccd4d0;
+  border-radius: 10rpx;
+  background: #fff;
+  color: #fff;
+  font-size: 26rpx;
+  line-height: 1;
+}
+
+.checkbox.checked {
+  border-color: var(--brand);
+  background: var(--brand);
+}
+
+.skip {
+  align-self: center;
+  margin-top: auto;
+  color: var(--brand-deep);
+  background: transparent;
+  font-size: 30rpx;
+}

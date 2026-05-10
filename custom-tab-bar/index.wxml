@@ -1,0 +1,13 @@
+<view class="tab-bar {{isAdmin ? 'admin-mode' : 'customer-mode'}}">
+  <view class="tab-item {{selected === index ? 'selected' : ''}} {{!isAdmin && index === 2 ? 'code-tab' : ''}}"
+        wx:for="{{list}}" wx:key="pagePath" data-index="{{index}}" bindtap="onTap">
+    <view wx:if="{{!isAdmin && index === 2}}" class="qr-cloud">
+      <view class="qr-mini"></view>
+    </view>
+    <view wx:else class="tab-icon tab-icon-{{index}}">
+      <text wx:if="{{isAdmin}}">{{item.shortText}}</text>
+      <view wx:else class="line-icon"></view>
+    </view>
+    <text class="tab-text">{{item.text}}</text>
+  </view>
+</view>

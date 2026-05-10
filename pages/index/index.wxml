@@ -1,0 +1,70 @@
+<view class="home">
+  <view class="navbar brandbar">
+    <view class="brand-logo">
+      <text class="wordmark">Moyo Beauty</text>
+      <text class="tagline">More Than Beauty</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="hero photo">
+      <view class="hero-copy">
+        <text class="hero-title">耀见未来</text>
+        <text class="hero-title">自成光华</text>
+        <text class="hero-brand">Moyo Beauty</text>
+      </view>
+      <view class="pager"><text class="active"></text><text></text><text></text><text></text></view>
+    </view>
+    <view class="slogan">Moyo Beauty · More Than Beauty</view>
+
+    <view class="login-card" bindtap="goLogin">
+      <view class="login-avatar-stack">
+        <image
+          class="avatar"
+          src="{{logged && userInfo.avatar ? userInfo.avatar : '/assets/images/login-avatar-eastern.png'}}"
+          mode="aspectFill">
+        </image>
+        <text class="tag">普通用户</text>
+      </view>
+      <view class="user-meta">
+        <view class="user-row">
+          <text class="user-name">你好，{{logged ? userInfo.nickname : '微信用户'}}</text>
+        </view>
+        <text class="muted">{{logged ? '欢迎回来，可查看预约记录' : '您还未登录，请先登录'}}</text>
+      </view>
+    </view>
+
+    <view class="quick">
+      <button class="quick-main" bindtap="goBooking">
+        <text class="quick-logo">Moyo Beauty</text>
+        <text class="quick-title">在线预约</text>
+        <text class="click">CLICK →</text>
+      </button>
+      <view class="quick-grid">
+        <button class="quick-sub refer" bindtap="goReferral">
+          <text class="quick-title">推荐有礼</text>
+          <text class="click">CLICK →</text>
+        </button>
+        <button class="quick-sub reward" bindtap="goReward">
+          <text class="quick-title">参与任务得奖励</text>
+          <text class="click">CLICK →</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="section-head"><text class="h3">门店地址</text><text class="en">STORE ADDRESS</text></view>
+    <view class="store-card card">
+      <view class="store-photo photo">
+        <image class="store-photo-img" src="/assets/images/store-moyo-beauty.jpg" mode="aspectFill"></image>
+      </view>
+      <text class="store-title">Moyo Beauty</text>
+      <view class="info-line"><text class="icon">◷</text><text>{{store.hours || '9:00-22:00'}}</text></view>
+      <view class="info-line"><text class="icon">⌖</text><text>{{store.address || '广东省深圳市南山区方大城T4栋13楼1306'}}</text></view>
+      <view class="btn-row">
+        <button class="btn secondary" bindtap="callStore"><text class="icon">☎</text>联系客服</button>
+        <button class="btn secondary map-btn" bindtap="openMap"><text class="map-icon"></text>导航去这里</button>
+        <button class="btn" bindtap="goBooking">去预约</button>
+      </view>
+    </view>
+  </view>
+</view>

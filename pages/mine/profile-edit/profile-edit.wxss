@@ -1,0 +1,142 @@
+.profile-edit {
+  background: var(--page-bg);
+  min-height: 100vh;
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+.form-section {
+  padding: var(--space-md);
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--divider);
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 24rpx;
+}
+.avatar-right {
+  display: flex;
+  align-items: center;
+}
+.avatar-img {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+}
+.avatar-placeholder {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #fff;
+  margin-right: 12rpx;
+}
+.arrow {
+  font-size: 36rpx;
+  color: var(--text-muted);
+}
+
+.field {
+  padding: 28rpx 24rpx;
+}
+.label {
+  display: block;
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: 16rpx;
+}
+.required {
+  color: var(--danger);
+  margin-left: 4rpx;
+}
+.input {
+  width: 100%;
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  min-height: 48rpx;
+}
+
+.gender-wrap {
+  display: flex;
+  gap: 24rpx;
+}
+.gender-btn {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: var(--radius-md);
+  border: 2rpx solid var(--divider);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  background: var(--card-bg);
+}
+.gender-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-bg);
+  font-weight: 600;
+}
+
+.picker-box {
+  padding: 12rpx 0;
+}
+.value {
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+}
+.placeholder {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+}
+
+.birthday-tip {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 12rpx;
+  padding: 8rpx 0;
+}
+
+.zodiac-box {
+  padding: 8rpx 0;
+}
+.zodiac-value {
+  font-size: var(--text-lg);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* 保存按钮 */
+.save-btn-wrap {
+  padding: var(--space-md);
+}
+.save-btn {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  border: none;
+}
+.save-btn.inactive {
+  background: var(--primary-light);
+  color: rgba(255,255,255,0.55);
+}
+.save-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  box-shadow: var(--shadow-gold);
+}

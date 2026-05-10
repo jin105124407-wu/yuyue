@@ -1,0 +1,37 @@
+<view class="admin-orders">
+  <view class="tabs">
+    <view wx:for="{{tabs}}" wx:key="key"
+          class="tab {{currentTab === item.key ? 'active' : ''}}"
+          bindtap="onTabTap" data-key="{{item.key}}">{{item.label}}</view>
+  </view>
+  <view class="toolbar">
+    <view class="tool-btn" bindtap="onMarkAll">全部已读</view>
+    <view class="tool-btn" bindtap="fetchList">刷新</view>
+  </view>
+
+  <view class="list">
+    <view wx:for="{{list}}" wx:key="_id"
+          class="order-item {{!item.adminRead ? 'unread' : ''}}"
+          bindtap="onOrderTap" data-item="{{item}}">
+      <view class="order-head">
+        <text class="order-service">{{item.serviceName}}</text>
+        <text class="order-status status-{{item.status}}">
+          {{item.status === 'pending' ? '待确认' :
+            item.status === 'confirmed' ? '已确认' :
+            item.status === 'done' ? '已完成' : '已取消'}}
+        </text>
+      </view>
+      <view class="order-row">
+        <text>{{item.date}} {{item.startTime}} - {{item.endTime}}</text>
+      </view>
+      <view class="order-row">
+        <text>美容师：{{item.staffName}}</text>
+      </view>
+      <view class="order-row">
+        <text>顾客：{{item.userSnapshot.nickname || '未命名'}} {{item.userSnapshot.phone}}</text>
+      </view>
+      <view class="order-remark" wx:if="{{item.remark}}">留言：{{item.remark}}</view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">暂无订单</view>
+  </view>
+</view>

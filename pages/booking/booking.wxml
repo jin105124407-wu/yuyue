@@ -1,0 +1,96 @@
+<view class="booking">
+  <block wx:if="{{!resultModal}}">
+    <view class="content no-tab">
+      <view class="staff-hero">
+        <text class="staff-head">左右滑动选择美容师</text>
+        <view class="staff-avatar">
+          <image class="staff-avatar-img" src="{{currentStaff.avatar || '/assets/images/staff-fenfen.jpg'}}" mode="aspectFill"></image>
+        </view>
+        <view class="staff-name">{{currentStaff.name || '芬芬'}}<text>美容师</text></view>
+      </view>
+
+      <text class="booking-title">预约时间</text>
+      <scroll-view scroll-x class="date-strip" show-scrollbar="{{false}}">
+        <view class="date-strip-inner">
+          <view
+            wx:for="{{dates}}"
+            wx:key="date"
+            class="date-btn {{selectedDate === item.date ? 'active' : ''}}"
+            data-date="{{item.date}}"
+            bindtap="onDateTap">
+            <text>{{item.dayLabel}}</text>
+            <text>{{item.weekLabel}}</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="time-grid-wrap">
+        <view class="time-row" wx:for="{{timeRows}}" wx:for-item="row" wx:key="icon">
+          <view class="time-icon">
+            <text>{{row.symbol}}</text>
+          </view>
+          <view
+            wx:for="{{row.times}}"
+            wx:for-item="t"
+            wx:key="*this"
+            class="time-cell {{disabledSlots.indexOf(t) >= 0 ? 'disabled' : ''}} {{occupiedMap[t] ? 'disabled' : ''}} {{selectedTime === t ? 'active' : ''}}"
+            data-time="{{t}}"
+            bindtap="onTimeTap">
+            <text>{{t}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="row-head">
+        <text>选择项目</text>
+        <text class="row-hint">点击卡片选择</text>
+      </view>
+      <view class="service-grid">
+        <button
+          wx:for="{{services}}"
+          wx:key="_id"
+          class="service-card {{selectedServiceId === item._id ? 'active' : ''}}"
+          data-id="{{item._id}}"
+          bindtap="onServiceTap">
+          <view class="check">✓</view>
+          <text class="service-name">{{item.name}}</text>
+          <text class="service-desc">{{item.description}}</text>
+          <text class="duration">{{item.durationMin}}min</text>
+        </button>
+      </view>
+      <view class="notice"><text class="icon">◷</text><text>服务结束后预留30分钟准备时间</text></view>
+      <view class="field">
+        <text>给美容师留言</text>
+        <textarea placeholder="可填写护理需求或备注" value="{{remark}}" bindinput="onRemarkInput" maxlength="200"></textarea>
+      </view>
+      <view class="fixed-action">
+        <button class="btn gold full" bindtap="onSubmit" disabled="{{submitting}}">
+          {{submitting ? '提交中...' : '确定预约'}}
+        </button>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="content no-tab success-content">
+      <view class="success-block">
+        <view class="success-icon">✓</view>
+        <text class="success-title">您的预约已经成功提交，请等待门店确认</text>
+        <text class="success-title">我们将会稍后联系您，请保持手机畅通</text>
+        <text class="success-tip">预约时间为服务开始时间，请提前15分钟到店</text>
+      </view>
+      <view class="list-card">
+        <view class="list-row"><text>预约时间</text><text class="strong">{{resultModal.date}} {{resultModal.startTime}}</text></view>
+        <view class="list-row"><text>预约项目</text><text class="strong">{{resultModal.serviceName}}</text></view>
+        <view class="list-row"><text>服务时长</text><text class="strong">{{resultModal.durationMin ? resultModal.durationMin : ''}}min</text></view>
+        <view class="list-row"><text>美容师</text><text class="strong">{{resultModal.staffName || '芬芬'}}</text></view>
+        <view class="list-row"><text>门店</text><text class="strong">Moyo Beauty</text></view>
+        <view class="list-row"><text>联系电话</text><text class="strong">电话咨询</text></view>
+      </view>
+      <view class="btn-row success-actions">
+        <button class="btn" bindtap="goBookingHistory">查看我的预约</button>
+        <button class="btn secondary" bindtap="goHome">返回首页</button>
+      </view>
+    </view>
+  </block>
+</view>

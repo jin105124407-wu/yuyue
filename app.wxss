@@ -1,0 +1,293 @@
+/* Moyo Beauty prototype tokens copied from ui/moyo-beauty-prototype.html */
+page {
+  --brand: #5f7f73;
+  --brand-deep: #3f6258;
+  --page-bg: #f2f7f1;
+  --card: #ffffff;
+  --gold: #c8ae7b;
+  --gold-soft: #f4e8c8;
+  --line: #e7ece8;
+  --text: #202725;
+  --text-2: #5e6965;
+  --muted: #9aa5a0;
+  --disabled: #c8d0cc;
+  --success: #67a66d;
+  --danger: #c85f55;
+  --shadow: 0 10rpx 34rpx rgba(63, 98, 88, 0.1);
+  --brand-soft: #ddeae3;
+  --brand-pale: #edf5ef;
+  --card-bg: var(--card);
+  --text-sub: var(--text-2);
+  --text-muted: var(--muted);
+  --primary: var(--brand);
+  --primary-dark: var(--brand-deep);
+  --primary-light: #b4c2ba;
+  --primary-bg: #e4ebe7;
+  --primary-bg-deep: #d0ddd6;
+  --primary-mute: #7a8d84;
+  --gold-dark: #8a7449;
+  --gold-bg: #f0eadf;
+  --divider: var(--line);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-2);
+  --text-on-primary: #f8faf7;
+  --input-muted-bg: #e8ece9;
+  --chip-bg: #e0e8e4;
+  --warning: #b8860b;
+  --warning-bg: #faf3e0;
+  --danger-bg: #f3e8e6;
+  --info: #3a6b8c;
+  --info-bg: #dce8f0;
+  --success-bg: #e3ece8;
+  --radius-sm: 12rpx;
+  --radius-md: 24rpx;
+  --radius-lg: 36rpx;
+  --radius-full: 999rpx;
+  --shadow-sm: 0 4rpx 16rpx rgba(32, 48, 42, 0.05);
+  --shadow-md: 0 16rpx 48rpx rgba(32, 48, 42, 0.07), 0 4rpx 12rpx rgba(32, 48, 42, 0.04);
+  --shadow-lg: 0 32rpx 96rpx rgba(32, 48, 42, 0.09), 0 8rpx 24rpx rgba(32, 48, 42, 0.05);
+  --shadow-gold: 0 8rpx 40rpx rgba(168, 143, 94, 0.22);
+  --shadow-card: var(--shadow);
+  --shadow-soft: var(--shadow);
+  --card-stroke: rgba(92, 114, 104, 0.18);
+  --text-xs: 22rpx;
+  --text-sm: 24rpx;
+  --text-md: 28rpx;
+  --text-lg: 32rpx;
+  --text-xl: 36rpx;
+  --text-2xl: 44rpx;
+  --text-3xl: 52rpx;
+  --space-xs: 8rpx;
+  --space-sm: 16rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
+  --space-xl: 40rpx;
+  --transition: all 0.22s ease;
+
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(200, 174, 123, 0.22), transparent 26%),
+    radial-gradient(circle at 82% 8%, rgba(95, 127, 115, 0.16), transparent 28%),
+    radial-gradient(circle at 92% 6%, rgba(228, 210, 169, 0.16), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), transparent 440rpx),
+    var(--page-bg);
+  font-size: 28rpx;
+  line-height: 1.55;
+}
+
+view,
+text,
+button,
+input,
+textarea,
+scroll-view {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  line-height: normal;
+}
+
+button::after {
+  border: 0;
+}
+
+.content {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 184rpx;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 244, 0.44), transparent 520rpx),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(223, 237, 229, 0.16));
+}
+
+.content.no-tab {
+  padding-bottom: 34rpx;
+}
+
+.card {
+  border: 1rpx solid rgba(230, 236, 229, 0.9);
+  border-radius: 32rpx;
+  background: var(--card);
+  box-shadow: 0 20rpx 48rpx rgba(63, 98, 88, 0.06);
+}
+
+.btn {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border-radius: 24rpx;
+  padding: 0 32rpx;
+  background: var(--brand);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.btn:active {
+  transform: scale(0.98);
+  background: var(--brand-deep);
+}
+
+.btn.secondary {
+  color: var(--brand-deep);
+  border: 1rpx solid rgba(95, 127, 115, 0.34);
+  background: #fff;
+}
+
+.btn.gold {
+  background: var(--gold);
+}
+
+.btn.full {
+  width: 100%;
+  height: 108rpx;
+  font-size: 34rpx;
+}
+
+.btn[disabled],
+.btn.disabled {
+  opacity: 0.55;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin: 28rpx 0 18rpx;
+}
+
+.section-head h3,
+.section-head .h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.section-head span,
+.section-head .en {
+  color: var(--muted);
+  font-size: 22rpx;
+  letter-spacing: 3rpx;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  color: #9b793f;
+  background: linear-gradient(90deg, #f7dfaa, #fff1cf);
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 24rpx;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  min-width: 0;
+}
+
+.user-name {
+  color: var(--text);
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.avatar {
+  width: 108rpx;
+  height: 108rpx;
+  flex: 0 0 108rpx;
+  display: grid;
+  place-items: center;
+  border: 6rpx solid rgba(244, 232, 200, 0.9);
+  border-radius: 50%;
+  background: url("/assets/images/login-avatar-eastern.png") center 42% / cover no-repeat;
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.68), 0 12rpx 32rpx rgba(63, 98, 88, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  font-size: 28rpx;
+}
+
+.empty-icon {
+  width: 116rpx;
+  height: 116rpx;
+  margin: 0 auto 22rpx;
+  border: 1.5rpx solid rgba(95, 127, 115, 0.32);
+  border-radius: 50%;
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(242, 247, 241, 0.9));
+}
+
+.list-card {
+  margin-top: 24rpx;
+  background: #fff;
+  border-top: 1rpx solid var(--line);
+  border-bottom: 1rpx solid var(--line);
+}
+
+.list-row {
+  display: grid;
+  grid-template-columns: 170rpx 1fr;
+  gap: 20rpx;
+  min-height: 96rpx;
+  align-items: center;
+  padding: 0 28rpx;
+  border-bottom: 1rpx solid rgba(231, 236, 232, 0.8);
+}
+
+.list-row:last-child {
+  border-bottom: 0;
+}
+
+.list-row span {
+  color: var(--muted);
+  font-size: 26rpx;
+}
+
+.list-row strong {
+  color: var(--text);
+  font-size: 28rpx;
+  text-align: right;
+  font-weight: 700;
+}
+
+.btn-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 24rpx;
+}

@@ -1,0 +1,152 @@
+.booking-history {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.content.no-tab {
+  padding-top: 0;
+}
+
+.orders-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 140rpx;
+  align-items: center;
+  margin: 0 -24rpx;
+  background: #fff;
+  border-bottom: 1rpx solid var(--line);
+}
+
+.orders-tab {
+  height: 100%;
+  color: var(--text-2);
+  background: #fff;
+  font-size: 32rpx;
+  font-weight: 500;
+  position: relative;
+}
+
+.orders-tab.active {
+  color: var(--brand-deep);
+  font-weight: 700;
+}
+
+.orders-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 22rpx;
+  width: 48rpx;
+  height: 5rpx;
+  border-radius: 999rpx;
+  background: var(--brand);
+  transform: translateX(-50%);
+}
+
+.booking-card {
+  display: grid;
+  grid-template-columns: 152rpx 1fr 128rpx;
+  gap: 24rpx;
+  align-items: center;
+  padding: 36rpx 28rpx;
+  margin-top: 56rpx;
+  background: #fff;
+  border-bottom: 1rpx solid var(--line);
+  border-top: 1rpx solid var(--line);
+}
+
+.booking-thumb {
+  width: 152rpx;
+  height: 152rpx;
+  border-radius: 8rpx;
+  background:
+    linear-gradient(rgba(95, 127, 115, 0.08), rgba(95, 127, 115, 0.08)),
+    url("https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=260&q=80");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.booking-thumb-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.booking-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.booking-meta text {
+  display: block;
+  color: var(--text-2);
+  font-size: 25rpx;
+  line-height: 1.62;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.booking-meta .order-no {
+  color: var(--text);
+  font-size: 30rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+}
+
+.status {
+  color: var(--success);
+  font-weight: 700;
+  text-align: right;
+  font-size: 26rpx;
+}
+
+.canceled-card .status {
+  color: var(--muted);
+}
+
+.booking-actions {
+  grid-column: 2 / 4;
+  display: flex;
+  justify-content: flex-end;
+  gap: 28rpx;
+  margin-top: 8rpx;
+}
+
+.text-btn {
+  color: var(--brand-deep);
+  background: transparent;
+  font-size: 26rpx;
+}
+
+.empty-card {
+  min-height: 600rpx;
+  display: grid;
+  place-items: center;
+  margin-top: 44rpx;
+  padding: 68rpx 44rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  margin: 0 0 20rpx;
+  color: var(--text);
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  display: block;
+  margin: 0 0 40rpx;
+  color: var(--muted);
+  font-size: 28rpx;
+  line-height: 1.65;
+}
+
+.empty-card .btn {
+  width: 220rpx;
+  margin: 0 auto;
+}

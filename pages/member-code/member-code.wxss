@@ -1,0 +1,67 @@
+.member-code {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.qr-content {
+  padding: 0 0 184rpx;
+}
+
+.qr-page-bg {
+  min-height: calc(100vh - 184rpx);
+  padding: 48rpx 48rpx 220rpx;
+  background:
+    linear-gradient(rgba(242, 247, 241, 0.76), rgba(242, 247, 241, 0.94)),
+    url("https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.qr-spacer {
+  height: 88rpx;
+}
+
+.qr-card {
+  padding: 56rpx 40rpx;
+  text-align: center;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.qr-card .avatar {
+  margin: -108rpx auto 16rpx;
+}
+
+.qr-card .tag {
+  margin-bottom: 16rpx;
+}
+
+.qr-name,
+.qr-title {
+  display: block;
+  color: var(--text);
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.qr-title {
+  margin-top: 20rpx;
+}
+
+.qr-icon-large {
+  width: 380rpx;
+  height: 380rpx;
+  margin: 56rpx auto 36rpx;
+  color: #111;
+  background:
+    linear-gradient(90deg, #111 36rpx, transparent 36rpx) 0 0 / 108rpx 108rpx,
+    linear-gradient(#111 36rpx, transparent 36rpx) 0 0 / 108rpx 108rpx,
+    #fff;
+  border: 24rpx solid #fff;
+  box-shadow: inset 0 0 0 20rpx #111, 0 0 0 2rpx #eee;
+  opacity: 0.26;
+}
+
+.qr-back {
+  margin-top: 36rpx;
+}

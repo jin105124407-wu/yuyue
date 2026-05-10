@@ -1,0 +1,90 @@
+.points {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.points-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36rpx;
+  margin-bottom: 28rpx;
+  color: var(--brand-deep);
+  background: linear-gradient(135deg, #dbe9e0, #f6f3e7);
+  border-radius: 32rpx;
+}
+
+.points-hero text {
+  display: block;
+  font-size: 26rpx;
+}
+
+.points-num {
+  margin-bottom: 12rpx;
+  font-size: 52rpx !important;
+  font-weight: 800;
+}
+
+.gift-mark {
+  width: 104rpx;
+  height: 104rpx;
+  display: grid;
+  place-items: center;
+  border: 2rpx solid rgba(95, 127, 115, 0.28);
+  border-radius: 50%;
+  color: var(--brand);
+  font-size: 42rpx;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.task-list {
+  padding: 28rpx;
+  margin-bottom: 28rpx;
+}
+
+.task-title {
+  display: block;
+  margin: 0 0 24rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80rpx;
+  border-top: 1rpx solid rgba(231, 236, 232, 0.9);
+  color: var(--text-2);
+  font-size: 28rpx;
+}
+
+.empty-card {
+  min-height: 420rpx;
+  display: grid;
+  place-items: center;
+  padding: 68rpx 44rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  margin: 0 0 20rpx;
+  color: var(--text);
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  display: block;
+  margin: 0 0 40rpx;
+  color: var(--muted);
+  font-size: 28rpx;
+  line-height: 1.65;
+}
+
+.empty-card .btn {
+  width: 220rpx;
+  margin: 0 auto;
+}

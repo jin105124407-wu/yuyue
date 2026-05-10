@@ -1,0 +1,64 @@
+<view class="profile-edit">
+  <view class="form-section">
+    <!-- 头像 -->
+    <view class="avatar-row card" bindtap="chooseAvatar">
+      <text class="label">头像</text>
+      <view class="avatar-right">
+        <image wx:if="{{profile.avatar}}" class="avatar-img" src="{{profile.avatar}}" mode="aspectFill"/>
+        <view wx:else class="avatar-placeholder">{{profile.nickname ? profile.nickname[0] : '👤'}}</view>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 昵称 -->
+    <view class="field card">
+      <text class="label">昵称</text>
+      <input class="input" type="nickname" placeholder="请输入昵称" value="{{profile.nickname}}" bindinput="onNicknameInput" bindblur="onNicknameBlur"/>
+    </view>
+
+    <!-- 会员姓名 -->
+    <view class="field card">
+      <text class="label">会员姓名 <text class="required">*</text></text>
+      <input class="input" type="text" placeholder="请输入姓名" value="{{profile.name}}" bindinput="onNameInput"/>
+    </view>
+
+    <!-- 性别 -->
+    <view class="field card">
+      <text class="label">会员性别 <text class="required">*</text></text>
+      <view class="gender-wrap">
+        <view class="gender-btn {{profile.gender === '男' ? 'active' : ''}}" data-gender="男" bindtap="onGenderSelect">男</view>
+        <view class="gender-btn {{profile.gender === '女' ? 'active' : ''}}" data-gender="女" bindtap="onGenderSelect">女</view>
+      </view>
+    </view>
+
+    <!-- 手机号 -->
+    <view class="field card">
+      <text class="label">会员手机号 <text class="required">*</text></text>
+      <input class="input" type="number" maxlength="11" placeholder="请输入手机号" value="{{profile.phone}}" bindinput="onPhoneInput"/>
+    </view>
+
+    <!-- 生日 -->
+    <view class="field card">
+      <text class="label">会员生日 <text class="required">*</text></text>
+      <picker mode="date" start="1900-01-01" end="{{todayStr}}" value="{{profile.birthday}}" bindchange="onBirthdayChange">
+        <view class="picker-box">
+          <text class="{{profile.birthday ? 'value' : 'placeholder'}}">{{profile.birthday || '请选择生日'}}</text>
+        </view>
+      </picker>
+      <view class="birthday-tip">温馨提示：生日只可设置一次</view>
+    </view>
+
+    <!-- 星座（只读） -->
+    <view class="field card" wx:if="{{profile.zodiac}}">
+      <text class="label">星座</text>
+      <view class="zodiac-box">
+        <text class="zodiac-value">{{profile.zodiac}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-btn-wrap">
+    <button class="save-btn {{canSave ? 'active' : 'inactive'}}" bindtap="onSave" disabled="{{!canSave}}">保存</button>
+  </view>
+</view>

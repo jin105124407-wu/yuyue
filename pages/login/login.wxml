@@ -1,0 +1,86 @@
+<block wx:if="{{step === 1}}">
+  <view class="login-page phone">
+    <view class="login-identity">
+      <view class="login-mark"><text>Moyo</text><text>Beauty</text></view>
+      <text class="login-title">调养，肌养，平衡</text>
+    </view>
+    <view class="auth-form">
+      <button class="btn full auth-primary" open-type="getPhoneNumber" bindgetphonenumber="onGetPhone">授权您的手机号码</button>
+      <input
+        class="auth-field phone-field"
+        type="number"
+        maxlength="11"
+        placeholder="或手动输入手机号"
+        value="{{profile.phone}}"
+        focus="{{focusPhone}}"
+        bindinput="onPhoneInput"
+      />
+      <text wx:if="{{phoneAuthTip}}" class="auth-tip">{{phoneAuthTip}}</text>
+      <button class="btn full auth-primary ready" bindtap="confirmPhone" disabled="{{!isPhoneValid}}">
+        继续
+      </button>
+      <view class="agreement" bindtap="onTogglePrivacy">
+        <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
+        <text>已阅读并同意《用户隐私条款》</text>
+      </view>
+    </view>
+    <button class="skip" bindtap="goHome">不想登录？去首页逛逛>></button>
+  </view>
+</block>
+
+<block wx:elif="{{step === 2}}">
+  <view class="login-page birthday">
+    <view class="login-identity">
+      <view class="login-mark"><text>Moyo</text><text>Beauty</text></view>
+      <text class="login-title">调养，肌养，平衡</text>
+    </view>
+    <view class="auth-form">
+      <text class="auth-copy">为了更好的为您服务，请填写您的出生日期：</text>
+      <picker mode="date" start="1900-01-01" end="{{todayStr}}" value="{{profile.birthday}}" bindchange="onPickBirthday">
+        <view class="auth-field {{profile.birthday ? '' : 'placeholder'}}">
+          {{profile.birthday ? profile.birthday : '请选择出生日期'}}
+        </view>
+      </picker>
+      <view class="zodiac-line">
+        <text wx:if="{{profile.zodiac}}">您的星座： {{profile.zodiac}}</text>
+        <text wx:else>选择后将自动识别您的星座</text>
+      </view>
+      <button class="btn full auth-primary ready" bindtap="confirmBirthday">确认生日</button>
+      <text class="age-note">注意：您必须年满18岁才能使用此服务</text>
+      <view class="agreement" bindtap="onTogglePrivacy">
+        <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
+        <text>已阅读并同意《用户隐私条款》</text>
+      </view>
+    </view>
+    <button class="skip" bindtap="setStep3">暂不填写，继续完善资料>></button>
+  </view>
+</block>
+
+<block wx:else>
+  <view class="login-page profile">
+    <view class="login-identity">
+      <image wx:if="{{profile.avatar}}" class="profile-avatar" src="{{profile.avatar}}" mode="aspectFill"></image>
+      <image wx:else class="profile-avatar" src="/assets/images/login-avatar-eastern.png" mode="aspectFill"></image>
+      <text class="login-title">调养，肌养，平衡</text>
+    </view>
+    <form class="auth-form" bindsubmit="onSubmitForm">
+      <input
+        class="auth-field"
+        type="nickname"
+        name="nickname"
+        placeholder="微信昵称"
+        value="{{profile.nickname}}"
+        bindblur="onNicknameBlur"
+        bindinput="onNicknameInput"
+      />
+      <button class="btn full auth-primary" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">点击授权新头像</button>
+      <view class="agreement" bindtap="onTogglePrivacy">
+        <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
+        <text>已阅读并同意《用户隐私条款》</text>
+      </view>
+      <button class="btn full auth-primary finish" form-type="submit" disabled="{{submitting}}">
+        {{submitting ? '提交中...' : '完成登录'}}
+      </button>
+    </form>
+  </view>
+</block>

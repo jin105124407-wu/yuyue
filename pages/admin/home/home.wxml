@@ -1,0 +1,41 @@
+<view class="admin-home">
+  <view wx:if="{{!isAdmin}}" class="no-admin">
+    <text>您不是管理员，无权查看此页。</text>
+  </view>
+  <block wx:else>
+    <view class="header">
+      <text class="title">工作台</text>
+      <text class="date">{{today}}</text>
+    </view>
+
+    <view class="stat-grid">
+      <view class="stat-card">
+        <text class="stat-num">{{customerCount}}</text>
+        <text class="stat-label">今日顾客</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-num">{{orderCount}}</text>
+        <text class="stat-label">今日订单</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-num">¥{{income}}</text>
+        <text class="stat-label">今日进账</text>
+      </view>
+    </view>
+
+    <view class="action-grid">
+      <view class="action-item" bindtap="goOrders">
+        <text class="action-icon">📋</text>
+        <text class="action-name">订单管理</text>
+      </view>
+      <view class="action-item" bindtap="goServices">
+        <text class="action-icon">💆</text>
+        <text class="action-name">项目管理</text>
+      </view>
+      <view class="action-item" bindtap="goStaff">
+        <text class="action-icon">👩</text>
+        <text class="action-name">美容师管理</text>
+      </view>
+    </view>
+  </block>
+</view>

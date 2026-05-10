@@ -1,0 +1,33 @@
+<view class="points-detail">
+  <!-- 积分余额 -->
+  <view class="points-header card">
+    <text class="points-label">当前积分</text>
+    <text class="points-balance">{{balance}}</text>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab {{activeTab === 'all' ? 'on' : ''}}" data-tab="all" bindtap="switchTab">全部</view>
+    <view class="tab {{activeTab === 'income' ? 'on' : ''}}" data-tab="income" bindtap="switchTab">入账</view>
+    <view class="tab {{activeTab === 'expense' ? 'on' : ''}}" data-tab="expense" bindtap="switchTab">消耗</view>
+  </view>
+
+  <!-- 明细列表 -->
+  <view class="list">
+    <view wx:if="{{filteredList.length === 0}}" class="empty">暂无积分记录</view>
+    <view wx:for="{{filteredList}}" wx:key="_id" class="record card">
+      <view class="record-left">
+        <view class="record-type {{item.type === 'income' ? 'income' : 'expense'}}">
+          {{item.type === 'income' ? '入账' : '消耗'}}
+        </view>
+        <view class="record-info">
+          <text class="record-title">{{item.reason}}</text>
+          <text class="record-time">{{item.timeStr}}</text>
+        </view>
+      </view>
+      <text class="record-amount {{item.type === 'income' ? 'plus' : 'minus'}}">
+        {{item.type === 'income' ? '+' : '-'}}{{item.amount}}
+      </text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,109 @@
+/* ================================================
+   订单管理页 — 清晰高效
+   ================================================ */
+.admin-orders {
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+  background: var(--page-bg);
+}
+
+/* 标签栏 */
+.tabs {
+  display: flex;
+  background: var(--card-bg);
+  border-bottom: 1rpx solid var(--divider);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx 0;
+  color: var(--text-secondary);
+  font-size: var(--text-md);
+  transition: var(--transition);
+}
+.tab.active {
+  color: var(--primary);
+  border-bottom: 4rpx solid var(--primary);
+  font-weight: 600;
+}
+
+/* 工具栏 */
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-md) var(--space-md);
+  gap: var(--space-sm);
+  background: var(--card-bg);
+  border-bottom: 1rpx solid var(--divider);
+}
+.tool-btn {
+  padding: 10rpx 24rpx;
+  border: 1.5rpx solid var(--primary);
+  color: var(--primary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  background: var(--card-bg);
+  transition: var(--transition);
+}
+.tool-btn:active { background: var(--primary-bg); }
+
+/* 订单列表 */
+.list { padding: var(--space-md); }
+.order-item {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 28rpx;
+  margin-bottom: var(--space-md);
+  border-left: 6rpx solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+.order-item.unread {
+  border-left-color: var(--primary);
+  background: var(--primary-bg);
+}
+.order-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.order-service {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.order-status {
+  font-size: var(--text-xs);
+  padding: 6rpx 16rpx;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+.status-pending { background: var(--warning-bg); color: var(--warning); }
+.status-confirmed { background: var(--info-bg); color: var(--info); }
+.status-done { background: var(--success-bg); color: var(--success); }
+.status-canceled { background: var(--danger-bg); color: var(--danger); }
+.order-row {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  margin: 6rpx 0;
+  line-height: 1.5;
+}
+.order-remark {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: 12rpx;
+  padding-top: 12rpx;
+  border-top: 1rpx dashed var(--divider);
+  line-height: 1.5;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 120rpx 0;
+  font-size: var(--text-lg);
+}

@@ -1,0 +1,29 @@
+<view class="privacy">
+  <text class="title">用户隐私条款</text>
+  <text class="p">欢迎您使用本美容预约小程序（以下简称"本小程序"）。我们高度重视您的个人信息保护，在您使用本小程序前，请仔细阅读本条款。</text>
+
+  <text class="h">一、我们收集的信息</text>
+  <text class="p">1. 微信基础信息：头像、昵称，用于展示您的会员身份。</text>
+  <text class="p">2. 手机号码：用于门店与您联系确认预约、提供售后服务。</text>
+  <text class="p">3. 生日信息：用于为您提供生日权益与个性化关怀。</text>
+  <text class="p">4. 预约记录：包含您选择的项目、美容师、时间、留言等，用于门店排期及服务履约。</text>
+
+  <text class="h">二、信息使用范围</text>
+  <text class="p">上述信息仅用于本小程序与门店的内部服务流程，不会向与本服务无关的第三方出售或提供。</text>
+
+  <text class="h">三、信息存储与保护</text>
+  <text class="p">您的信息存储在微信云开发数据库中，我们通过微信云平台提供的安全机制（传输加密、访问鉴权）保护您的数据安全。</text>
+
+  <text class="h">四、您的权利</text>
+  <text class="p">1. 您可以随时在"我的"页面查看或更新头像、昵称等资料。</text>
+  <text class="p">2. 您可以通过"退出登录/重置"操作清除本地缓存并重置账号信息。</text>
+  <text class="p">3. 如需注销账号或删除数据，请联系门店客服。</text>
+
+  <text class="h">五、未成年人条款</text>
+  <text class="p">若您为未成年人，请在监护人陪同下阅读本条款并在其指导下使用本小程序。</text>
+
+  <text class="h">六、条款变更</text>
+  <text class="p">本条款可能根据产品迭代及法律法规要求进行更新，更新后我们将在本页面公示，继续使用即视为同意新版本。</text>
+
+  <text class="p muted">最终解释权归本小程序及门店所有。</text>
+</view>

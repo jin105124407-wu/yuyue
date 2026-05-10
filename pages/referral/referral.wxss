@@ -1,0 +1,52 @@
+/* ================================================
+   推荐有礼页
+   ================================================ */
+.ref {
+  padding: var(--space-xl) var(--space-md);
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+  background: var(--page-bg);
+  min-height: 100vh;
+}
+.title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  padding: var(--space-md) var(--space-xs);
+  color: var(--text-primary);
+}
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1rpx solid var(--divider);
+}
+.tip {
+  display: block;
+  font-size: var(--text-md);
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+.reward-item {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  margin: 14rpx 0;
+  line-height: 1.6;
+  padding-left: var(--space-md);
+  border-left: 4rpx solid var(--primary);
+}
+.share-btn {
+  margin-top: 56rpx;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  padding: 24rpx 0;
+  text-align: center;
+  box-shadow: var(--shadow-gold);
+  border: none;
+  width: 100%;
+  letter-spacing: 2rpx;
+}
+.share-btn::after { border: none; }

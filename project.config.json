@@ -1,0 +1,58 @@
+{
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "uglifyFileName": false,
+    "enhance": true,
+    "packNpmRelationList": [],
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useCompilerPlugins": false,
+    "minifyWXML": true,
+    "autoAudits": false
+  },
+  "compileType": "miniprogram",
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": ".agents" },
+      { "type": "folder", "value": ".claude" },
+      { "type": "folder", "value": ".llm-chat-history" },
+      { "type": "folder", "value": ".trae" },
+      { "type": "folder", "value": "docs" },
+      { "type": "folder", "value": "PRDS" },
+      { "type": "folder", "value": "ui" },
+      { "type": "folder", "value": "Vibecoding-helper-Skill" },
+      { "type": "file", "value": "tmp-bottom-icons-check.png" },
+      { "type": "file", "value": "tmp-booking-7days-check-after.png" },
+      { "type": "file", "value": "tmp-booking-7days-check.png" },
+      { "type": "file", "value": "tmp-booking-image-strict.png" },
+      { "type": "file", "value": "tmp-booking-one-month-check.png" },
+      { "type": "file", "value": "tmp-booking-services-grid-final.png" },
+      { "type": "file", "value": "tmp-booking-services-grid.png" },
+      { "type": "file", "value": "tmp-booking-time-text-check.png" },
+      { "type": "file", "value": "tmp-home-after-story-avatar-qr.png" },
+      { "type": "file", "value": "tmp-index-after-image-copy.png" },
+      { "type": "file", "value": "tmp-index-image-strict.png" },
+      { "type": "file", "value": "tmp-login-fix-check.png" },
+      { "type": "file", "value": "tmp-mine-avatar-fill.png" },
+      { "type": "file", "value": "tmp-mine-avatar-layout.png" },
+      { "type": "file", "value": "tmp-mine-current.png" },
+      { "type": "file", "value": "tmp-mine-login.png" },
+      { "type": "file", "value": "tmp-moyo-booking-check-2.png" },
+      { "type": "file", "value": "tmp-moyo-booking-check.png" },
+      { "type": "file", "value": "tmp-moyo-ui-check-2.png" },
+      { "type": "file", "value": "tmp-moyo-ui-check-3.png" },
+      { "type": "file", "value": "tmp-moyo-ui-check.png" }
+    ],
+    "include": []
+  },
+  "appid": "wx226ec0e48e61ad7b",
+  "editorSetting": {},
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+}

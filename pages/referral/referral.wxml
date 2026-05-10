@@ -1,0 +1,9 @@
+<view class="ref">
+  <view class="title">推荐有礼</view>
+  <view class="card">
+    <text class="tip">邀请好友到店体验，双方均享好礼：</text>
+    <view class="reward-item">· 好友首次到店：您获得 100 积分</view>
+    <view class="reward-item">· 好友成为会员：您获得 50 元到店券</view>
+  </view>
+  <button open-type="share" class="share-btn">立即分享给好友</button>
+</view>

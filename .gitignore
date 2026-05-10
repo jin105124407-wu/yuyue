@@ -1,0 +1,49 @@
+# Dependencies and build outputs
+node_modules/
+miniprogram_npm/
+dist/
+build/
+coverage/
+
+# WeChat DevTools local/private config
+project.private.config.json
+*.local.json
+
+# Secrets
+*密钥*
+.env
+.env.*
+!.env.example
+
+# Local assistant/editor artifacts
+.agents/
+.claude/
+.llm-chat-history/
+.trae/
+Vibecoding-helper-Skill/
+skills-lock.json
+CLAUDE.md
+
+# Design references and generated docs not needed for app runtime
+ui/
+docs/
+PRDS/
+部署说明.txt
+预约系统基本要求.txt
+
+# Temporary screenshots and generated checks
+tmp-*.png
+tmp-*.jpg
+tmp-*.jpeg
+tmp-*.webp
+tmp-*.pdf
+
+# Logs and OS/editor noise
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

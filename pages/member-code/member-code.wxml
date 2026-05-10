@@ -1,0 +1,17 @@
+<view class="member-code">
+  <view class="content qr-content">
+    <view class="qr-page-bg">
+      <view class="qr-spacer"></view>
+      <view class="qr-card card">
+        <image class="avatar" src="/assets/images/login-avatar-eastern.png" mode="aspectFill"></image>
+        <text class="tag">普通用户</text>
+        <text class="qr-name">{{nickname ? nickname : '微信用户'}}</text>
+        <view class="qr-icon-large"></view>
+        <text class="muted">NO. --------</text>
+        <text class="qr-title">会员码功能暂未开放</text>
+        <text class="muted">后续可用于到店识别或会员核销</text>
+      </view>
+      <button class="btn secondary full qr-back" bindtap="goHome">返回首页</button>
+    </view>
+  </view>
+</view>

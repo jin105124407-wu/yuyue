@@ -1,0 +1,46 @@
+.mall {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.search {
+  height: 84rpx;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 0 28rpx;
+  border-radius: 16rpx;
+  color: var(--muted);
+  background: #fff;
+  border: 1rpx solid rgba(231, 236, 232, 0.9);
+}
+
+.empty-card {
+  min-height: 600rpx;
+  display: grid;
+  place-items: center;
+  margin-top: 44rpx;
+  padding: 68rpx 44rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  margin: 0 0 20rpx;
+  color: var(--text);
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  display: block;
+  margin: 0 0 40rpx;
+  color: var(--muted);
+  font-size: 28rpx;
+  line-height: 1.65;
+}
+
+.empty-card .btn {
+  width: 220rpx;
+  margin: 0 auto;
+}
