@@ -1,5 +1,6 @@
 const app = getApp();
 const { getZodiac } = require('../../utils/zodiac');
+const { DEFAULT_AVATAR, displayAvatar, pickBestUser, safeAvatar } = require('../../utils/user-display');
 
 function todayStr() {
   const d = new Date();
@@ -12,6 +13,7 @@ Page({
     storyImages: [],
     store: {},
     userInfo: null,
+    displayAvatar: DEFAULT_AVATAR,
     logged: false,
     agreePrivacy: false,
     phoneAuthTip: '',
@@ -20,11 +22,6 @@ Page({
   },
 
   onLoad() { this.loadData(); },
-
-  safeAvatar(avatar) {
-    if (!avatar || avatar.indexOf('http://tmp/') === 0) return '';
-    return avatar;
-  },
 
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -52,26 +49,29 @@ Page({
 
   async refreshUser() {
     const openid = wx.getStorageSync('openid');
-    if (!openid) { this.setData({ logged: false, userInfo: null }); return; }
+    if (!openid) {
+      this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR });
+      return;
+    }
     const cachedUser = wx.getStorageSync('userInfo');
     if (cachedUser && cachedUser.nickname) {
-      cachedUser.avatar = this.safeAvatar(cachedUser.avatar);
-      this.setData({ logged: true, userInfo: cachedUser });
+      cachedUser.avatar = safeAvatar(cachedUser.avatar);
+      this.setData({ logged: true, userInfo: cachedUser, displayAvatar: displayAvatar(cachedUser) });
     }
     const db = wx.cloud.database();
     try {
       const r = await db.collection('users').where({ openid }).limit(1).get();
-      const u = r.data[0];
+      const u = pickBestUser(r.data || [], cachedUser || null);
       if (u && u.nickname) {
-        u.avatar = this.safeAvatar(u.avatar);
+        u.avatar = safeAvatar(u.avatar);
         wx.setStorageSync('userInfo', u);
-        this.setData({ logged: true, userInfo: u });
+        this.setData({ logged: true, userInfo: u, displayAvatar: displayAvatar(u) });
       } else if (!cachedUser) {
-        this.setData({ logged: false, userInfo: u || null });
+        this.setData({ logged: false, userInfo: u || null, displayAvatar: DEFAULT_AVATAR });
       }
     } catch (e) {
       console.warn('refreshUser failed', e);
-      if (!cachedUser) this.setData({ logged: false, userInfo: null });
+      if (!cachedUser) this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR });
     }
   },
 

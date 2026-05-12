@@ -12,6 +12,7 @@
     "pages/mine/booking-history/booking-history",
     "pages/admin/home/home",
     "pages/admin/orders/orders",
+    "pages/admin/voice/voice",
     "pages/admin/services/services",
     "pages/admin/staff/staff",
     "pages/privacy/privacy",

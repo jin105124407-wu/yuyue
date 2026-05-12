@@ -3,6 +3,7 @@ App({
   globalData: {
     openid: '',
     isAdmin: false,
+    adminMode: false,
     userInfo: null,
     store: {
       name: '',
@@ -37,6 +38,7 @@ App({
         const { openid, isAdmin, user } = result;
         this.globalData.openid = openid;
         this.globalData.isAdmin = !!isAdmin;
+        this.globalData.adminMode = wx.getStorageSync('adminMode') !== false && !!isAdmin;
         this.globalData.userInfo = wx.getStorageSync('userInfo') || null;
         wx.setStorageSync('openid', this.globalData.openid);
         wx.setStorageSync('isAdmin', this.globalData.isAdmin);

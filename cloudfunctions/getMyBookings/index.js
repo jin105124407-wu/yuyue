@@ -2,6 +2,14 @@ const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
+function normalizeBooking(item) {
+  if (!item) return item;
+  return {
+    ...item,
+    staffName: !item.staffName || item.staffName === '小美老师' ? '芬芬' : item.staffName
+  };
+}
+
 exports.main = async (event = {}) => {
   const { OPENID } = cloud.getWXContext();
   const { limit = 50 } = event;
@@ -17,7 +25,7 @@ exports.main = async (event = {}) => {
       .limit(limit)
       .get();
 
-    return { ok: true, openid: OPENID, list: res.data || [] };
+    return { ok: true, openid: OPENID, list: (res.data || []).map(normalizeBooking) };
   } catch (e) {
     return { ok: false, openid: OPENID, reason: e.message || String(e), list: [] };
   }

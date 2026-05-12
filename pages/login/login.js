@@ -211,8 +211,8 @@ Page({
     const formNickname = (e.detail && e.detail.value && e.detail.value.nickname) || '';
     const p = this.data.profile;
     const nickname = formNickname || p.nickname || '';
+    const avatarInput = p.avatar || '/assets/images/login-avatar-eastern.png';
 
-    if (!p.avatar) { wx.showToast({ title: '请选择头像', icon: 'none' }); return; }
     if (!nickname) { wx.showToast({ title: '请填写昵称', icon: 'none' }); return; }
     if (!this.data.agreePrivacy) {
       wx.showToast({ title: '请勾选同意隐私条款', icon: 'none' }); return;
@@ -221,7 +221,7 @@ Page({
     this.setData({ submitting: true });
     try {
       await ensureLogin();
-      const avatar = await this.ensureCloudAvatar(p.avatar);
+      const avatar = await this.ensureCloudAvatar(avatarInput);
       if (!avatar || avatar.indexOf('http://tmp/') === 0) {
         wx.showToast({ title: '头像保存失败，请重新选择', icon: 'none' });
         return;

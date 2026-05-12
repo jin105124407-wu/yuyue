@@ -10,6 +10,14 @@ async function isAdmin(openid) {
 
 const ALLOWED = ['services', 'staff'];
 
+function normalizeItem(collection, item) {
+  if (collection !== 'staff' || !item) return item;
+  return {
+    ...item,
+    name: !item.name || item.name === '小美老师' ? '芬芬' : item.name
+  };
+}
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
   if (!(await isAdmin(OPENID))) return { ok: false, reason: '无权限' };
@@ -19,6 +27,10 @@ exports.main = async (event) => {
 
   const col = db.collection(collection);
 
+  if (action === 'list') {
+    const res = await col.orderBy('sortOrder', 'asc').get();
+    return { ok: true, list: (res.data || []).map(item => normalizeItem(collection, item)) };
+  }
   if (action === 'create') {
     const res = await col.add({ data: Object.assign({ enabled: true, createdAt: db.serverDate() }, data || {}) });
     return { ok: true, id: res._id };

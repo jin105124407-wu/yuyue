@@ -1,0 +1,59 @@
+<view class="voice-page">
+  <view wx:if="{{!isAdmin}}" class="no-admin">
+    <text>您不是管理员，无权查看此页。</text>
+  </view>
+
+  <block wx:else>
+    <view class="hero">
+      <view>
+        <text class="eyebrow">Voice Monitor</text>
+        <text class="kicker">店铺音响播报</text>
+        <text class="title">{{running ? '监听中' : '已暂停'}}</text>
+      </view>
+      <switch checked="{{running}}" bindchange="onRunningChange" color="#5F7F73" />
+    </view>
+
+    <view class="status-panel {{speaking ? 'speaking' : ''}}">
+      <text class="status-main">{{speaking ? '正在播报新预约' : running ? '等待新预约' : '播报已暂停'}}</text>
+      <text class="status-sub">{{statusText}}</text>
+    </view>
+
+    <view wx:if="{{!pluginReady}}" class="plugin-warning">
+      <text class="section-title">提示音播报模式</text>
+      <text class="warning-text">页面会监听新预约和取消预约，并通过本设备播放对应提示音。请保持本页前台打开，并连接店铺音响。</text>
+    </view>
+
+    <view class="controls">
+      <view class="control-btn primary {{loading ? 'checking' : ''}}" bindtap="pollNow">
+        {{loading ? '检查中' : '立即检查'}}
+      </view>
+      <view class="control-btn {{!currentNotice ? 'disabled' : ''}}" bindtap="replayCurrent">重播当前</view>
+    </view>
+
+    <view class="test-row">
+      <view class="control-btn test" bindtap="testAlertSound">测试新预约音</view>
+      <view class="control-btn test cancel" bindtap="testCancelSound">测试取消音</view>
+    </view>
+
+    <view class="notice-card" wx:if="{{currentNotice}}">
+      <text class="section-title">当前播报</text>
+      <text class="notice-text">{{currentNotice.voiceNoticeText}}</text>
+      <view class="notice-meta">
+        <text>{{currentNotice.date}} {{currentNotice.startTime}}</text>
+        <text>{{currentNotice.staffName}}</text>
+      </view>
+    </view>
+
+    <view class="queue">
+      <view class="queue-head">
+        <text class="section-title">待播报</text>
+        <text class="queue-count">{{queue.length}} 条</text>
+      </view>
+      <view wx:for="{{queue}}" wx:key="_id" class="queue-item">
+        <text class="queue-service">{{item.serviceName}}</text>
+        <text class="queue-time">{{item.date}} {{item.startTime}}</text>
+      </view>
+      <view wx:if="{{queue.length === 0}}" class="empty">暂无待播报预约</view>
+    </view>
+  </block>
+</view>

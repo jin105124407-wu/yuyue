@@ -1,7 +1,10 @@
 <view class="staff-admin">
   <view class="toolbar">
-    <text class="title">美容师管理</text>
-    <view class="add-btn" bindtap="onAdd">+ 新增美容师</view>
+    <view>
+      <text class="page-kicker">Staff</text>
+      <text class="title">美容师管理</text>
+    </view>
+    <view class="add-btn" bindtap="onAdd">新增美容师</view>
   </view>
 
   <view class="list">
@@ -9,12 +12,16 @@
       <view class="avatar-text">{{item.name ? item.name[0] : '?'}}</view>
       <view class="item-main">
         <text class="name">{{item.name}}<text class="disabled-tag" wx:if="{{item.enabled === false}}">已停用</text></text>
-        <text class="meta">排序：{{item.sortOrder}}</text>
+        <text class="meta">展示排序 {{item.sortOrder}}</text>
       </view>
       <view class="item-actions">
         <view class="action" bindtap="onEdit" data-item="{{item}}">编辑</view>
         <view class="action danger" bindtap="onRemove" data-id="{{item._id}}">删除</view>
       </view>
+    </view>
+    <view wx:if="{{list.length === 0}}" class="empty-state">
+      <text class="empty-title">暂无美容师</text>
+      <text class="empty-desc">新增美容师后，用户预约时可选择服务人员。</text>
     </view>
   </view>
 
@@ -25,8 +32,8 @@
         <view class="big-avatar-text">{{editing.name ? editing.name[0] : '?'}}</view>
         <text>点击更换头像</text>
       </view>
-      <view class="field"><text>姓名</text><input value="{{editing.name}}" data-key="name" bindinput="onInput"/></view>
-      <view class="field"><text>排序</text><input type="number" value="{{editing.sortOrder}}" data-key="sortOrder" bindinput="onInput"/></view>
+      <view class="field"><text>姓名</text><input placeholder="请输入姓名" value="{{editing.name}}" data-key="name" bindinput="onInput"/></view>
+      <view class="field"><text>排序</text><input type="number" placeholder="数字越小越靠前" value="{{editing.sortOrder}}" data-key="sortOrder" bindinput="onInput"/></view>
       <view class="field"><text>启用</text><switch checked="{{editing.enabled !== false}}" bindchange="onToggleEnabled"/></view>
       <view class="modal-actions">
         <view class="btn" bindtap="onCancel">取消</view>

@@ -19,6 +19,18 @@ function buildOrderNo(date, count) {
   const datePart = String(date || '').replace(/\D/g, '');
   return `MOYO${datePart}${String(count + 1).padStart(4, '0')}`;
 }
+function buildVoiceNoticeText(booking) {
+  const customer = booking.userSnapshot.nickname || '顾客';
+  const phone = booking.userSnapshot.phone ? `，电话${booking.userSnapshot.phone}` : '';
+  const remark = booking.remark ? `，备注${booking.remark}` : '';
+  return [
+    '新预约提醒',
+    `${customer}${phone}`,
+    `预约${booking.serviceName}`,
+    `时间${booking.date} ${booking.startTime}`,
+    `服务美容师${booking.staffName}${remark}`
+  ].join('。');
+}
 
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
@@ -66,29 +78,37 @@ exports.main = async (event) => {
   const dayCount = await db.collection('bookings').where({ date }).count();
   const orderNo = buildOrderNo(date, dayCount.total || 0);
 
+  const bookingData = {
+    orderNo,
+    openid: OPENID,
+    userSnapshot: {
+      nickname: user.nickname || '',
+      avatar: user.avatar || '',
+      phone: user.phone || ''
+    },
+    staffId,
+    staffName: normalizeStaffName(staffDoc.data.name),
+    staffAvatar: staffDoc.data.avatar || '',
+    serviceId,
+    serviceName: service.name,
+    durationMin,
+    date,
+    startTime,
+    endTime: minToHHmm(endMin),
+    remark: remark || '',
+    status: 'pending',
+    amount: service.price || 0,
+    adminRead: false,
+    voiceNoticeStatus: 'pending',
+    voiceNoticeType: 'new',
+    voiceNoticePlayedAt: null,
+    createdAt: db.serverDate()
+  };
+  bookingData.voiceNoticeText = buildVoiceNoticeText(bookingData);
+
   const addRes = await db.collection('bookings').add({
     data: {
-      orderNo,
-      openid: OPENID,
-      userSnapshot: {
-        nickname: user.nickname || '',
-        avatar: user.avatar || '',
-        phone: user.phone || ''
-      },
-      staffId,
-      staffName: normalizeStaffName(staffDoc.data.name),
-      staffAvatar: staffDoc.data.avatar || '',
-      serviceId,
-      serviceName: service.name,
-      durationMin,
-      date,
-      startTime,
-      endTime: minToHHmm(endMin),
-      remark: remark || '',
-      status: 'pending',
-      amount: service.price || 0,
-      adminRead: false,
-      createdAt: db.serverDate()
+      ...bookingData
     }
   });
 

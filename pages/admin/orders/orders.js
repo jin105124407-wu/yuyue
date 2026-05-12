@@ -20,7 +20,7 @@ Page({
 
   onLoad() {
     audioCtx = wx.createInnerAudioContext();
-    audioCtx.src = '/assets/audio/new-order.mp3';
+    audioCtx.src = '/assets/audio/new-booking.mp3';
     this.fetchList();
   },
 

@@ -1,7 +1,10 @@
 <view class="services-admin">
   <view class="toolbar">
-    <text class="title">项目管理</text>
-    <view class="add-btn" bindtap="onAdd">+ 新增项目</view>
+    <view>
+      <text class="page-kicker">Services</text>
+      <text class="title">项目管理</text>
+    </view>
+    <view class="add-btn" bindtap="onAdd">新增项目</view>
   </view>
 
   <view class="list">
@@ -9,22 +12,29 @@
       <view class="item-main">
         <text class="name">{{item.name}} <text class="disabled-tag" wx:if="{{item.enabled === false}}">已停用</text></text>
         <text class="desc">{{item.description}}</text>
-        <text class="meta">{{item.durationMin}} 分钟 · ¥{{item.price || 0}}</text>
+        <view class="meta-row">
+          <text class="meta">{{item.durationMin}} 分钟</text>
+          <text class="meta">¥{{item.price || 0}}</text>
+        </view>
       </view>
       <view class="item-actions">
         <view class="action" bindtap="onEdit" data-item="{{item}}">编辑</view>
         <view class="action danger" bindtap="onRemove" data-id="{{item._id}}">删除</view>
       </view>
     </view>
+    <view wx:if="{{list.length === 0}}" class="empty-state">
+      <text class="empty-title">暂无项目</text>
+      <text class="empty-desc">新增护理项目后，用户即可在预约页选择。</text>
+    </view>
   </view>
 
   <view wx:if="{{editing}}" class="modal-mask" bindtap="onCancel">
     <view class="modal" catchtap>
       <text class="modal-title">{{editing._id ? '编辑项目' : '新增项目'}}</text>
-      <view class="field"><text>名称</text><input value="{{editing.name}}" data-key="name" bindinput="onInput"/></view>
-      <view class="field"><text>描述</text><input value="{{editing.description}}" data-key="description" bindinput="onInput"/></view>
-      <view class="field"><text>时长(分)</text><input type="number" value="{{editing.durationMin}}" data-key="durationMin" bindinput="onInput"/></view>
-      <view class="field"><text>价格(¥)</text><input type="number" value="{{editing.price}}" data-key="price" bindinput="onInput"/></view>
+      <view class="field"><text>名称</text><input placeholder="请输入项目名称" value="{{editing.name}}" data-key="name" bindinput="onInput"/></view>
+      <view class="field"><text>描述</text><input placeholder="请输入项目说明" value="{{editing.description}}" data-key="description" bindinput="onInput"/></view>
+      <view class="field"><text>时长</text><input type="number" placeholder="分钟" value="{{editing.durationMin}}" data-key="durationMin" bindinput="onInput"/></view>
+      <view class="field"><text>价格</text><input type="number" placeholder="金额" value="{{editing.price}}" data-key="price" bindinput="onInput"/></view>
       <view class="field"><text>启用</text><switch checked="{{editing.enabled !== false}}" bindchange="onToggleEnabled"/></view>
       <view class="modal-actions">
         <view class="btn" bindtap="onCancel">取消</view>

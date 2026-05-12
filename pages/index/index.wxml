@@ -21,7 +21,7 @@
       <view class="login-avatar-stack">
         <image
           class="avatar"
-          src="{{logged && userInfo.avatar ? userInfo.avatar : '/assets/images/login-avatar-eastern.png'}}"
+          src="{{displayAvatar}}"
           mode="aspectFill">
         </image>
         <text class="tag">普通用户</text>

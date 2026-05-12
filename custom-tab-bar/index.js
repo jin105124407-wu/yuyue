@@ -28,8 +28,18 @@ Component({
   methods: {
     refreshForRole() {
       const isAdmin = !!wx.getStorageSync('isAdmin');
-      const list = isAdmin ? ADMIN_LIST : CUSTOMER_LIST;
-      this.setData({ isAdmin, list });
+      const pages = getCurrentPages();
+      const current = pages[pages.length - 1];
+      const route = current && current.route ? '/' + current.route : '';
+      const adminModeStored = wx.getStorageSync('adminMode');
+      const adminMode = isAdmin && (
+        adminModeStored === '' ||
+        adminModeStored === undefined ||
+        adminModeStored === true ||
+        route.indexOf('/pages/admin/') === 0
+      );
+      const list = adminMode ? ADMIN_LIST : CUSTOMER_LIST;
+      this.setData({ isAdmin: adminMode, list });
       this.syncSelected();
     },
     syncSelected() {

@@ -1,16 +1,23 @@
 <block wx:if="{{step === 1}}">
   <view class="login-page phone">
+    <view class="step-line">
+      <view class="step-dot active"></view>
+      <view class="step-dot"></view>
+      <view class="step-dot"></view>
+    </view>
     <view class="login-identity">
       <view class="login-mark"><text>Moyo</text><text>Beauty</text></view>
       <text class="login-title">调养，肌养，平衡</text>
+      <text class="login-subtitle">绑定手机号后，可同步查看预约和会员信息</text>
     </view>
     <view class="auth-form">
-      <button class="btn full auth-primary" open-type="getPhoneNumber" bindgetphonenumber="onGetPhone">授权您的手机号码</button>
+      <button class="btn full auth-primary" open-type="getPhoneNumber" bindgetphonenumber="onGetPhone">微信授权手机号</button>
+      <view class="divider"><text>或</text></view>
       <input
         class="auth-field phone-field"
         type="number"
         maxlength="11"
-        placeholder="或手动输入手机号"
+        placeholder="请输入手机号"
         value="{{profile.phone}}"
         focus="{{focusPhone}}"
         bindinput="onPhoneInput"
@@ -21,21 +28,27 @@
       </button>
       <view class="agreement" bindtap="onTogglePrivacy">
         <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
-        <text>已阅读并同意《用户隐私条款》</text>
+        <text>已阅读并同意</text>
+        <text class="privacy-link" catchtap="openPrivacy">《用户隐私条款》</text>
       </view>
     </view>
-    <button class="skip" bindtap="goHome">不想登录？去首页逛逛>></button>
+    <button class="skip" bindtap="goHome">暂不登录，返回首页</button>
   </view>
 </block>
 
 <block wx:elif="{{step === 2}}">
   <view class="login-page birthday">
+    <view class="step-line">
+      <view class="step-dot done"></view>
+      <view class="step-dot active"></view>
+      <view class="step-dot"></view>
+    </view>
     <view class="login-identity">
       <view class="login-mark"><text>Moyo</text><text>Beauty</text></view>
-      <text class="login-title">调养，肌养，平衡</text>
+      <text class="login-title">完善生日信息</text>
+      <text class="login-subtitle">用于会员关怀和护理提醒，可稍后再补充</text>
     </view>
     <view class="auth-form">
-      <text class="auth-copy">为了更好的为您服务，请填写您的出生日期：</text>
       <picker mode="date" start="1900-01-01" end="{{todayStr}}" value="{{profile.birthday}}" bindchange="onPickBirthday">
         <view class="auth-field {{profile.birthday ? '' : 'placeholder'}}">
           {{profile.birthday ? profile.birthday : '请选择出生日期'}}
@@ -46,22 +59,32 @@
         <text wx:else>选择后将自动识别您的星座</text>
       </view>
       <button class="btn full auth-primary ready" bindtap="confirmBirthday">确认生日</button>
-      <text class="age-note">注意：您必须年满18岁才能使用此服务</text>
+      <text class="age-note">生日信息仅用于会员服务，不会公开展示</text>
       <view class="agreement" bindtap="onTogglePrivacy">
         <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
-        <text>已阅读并同意《用户隐私条款》</text>
+        <text>已阅读并同意</text>
+        <text class="privacy-link" catchtap="openPrivacy">《用户隐私条款》</text>
       </view>
     </view>
-    <button class="skip" bindtap="setStep3">暂不填写，继续完善资料>></button>
+    <view class="footer-actions">
+      <button class="skip" bindtap="backStep">返回上一步</button>
+      <button class="skip" bindtap="setStep3">稍后填写</button>
+    </view>
   </view>
 </block>
 
 <block wx:else>
   <view class="login-page profile">
+    <view class="step-line">
+      <view class="step-dot done"></view>
+      <view class="step-dot done"></view>
+      <view class="step-dot active"></view>
+    </view>
     <view class="login-identity">
       <image wx:if="{{profile.avatar}}" class="profile-avatar" src="{{profile.avatar}}" mode="aspectFill"></image>
       <image wx:else class="profile-avatar" src="/assets/images/login-avatar-eastern.png" mode="aspectFill"></image>
-      <text class="login-title">调养，肌养，平衡</text>
+      <text class="login-title">设置会员资料</text>
+      <text class="login-subtitle">未选择头像时，将使用默认会员头像</text>
     </view>
     <form class="auth-form" bindsubmit="onSubmitForm">
       <input
@@ -73,14 +96,16 @@
         bindblur="onNicknameBlur"
         bindinput="onNicknameInput"
       />
-      <button class="btn full auth-primary" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">点击授权新头像</button>
+      <button class="btn full auth-secondary" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">更换微信头像（可选）</button>
       <view class="agreement" bindtap="onTogglePrivacy">
         <view class="checkbox {{agreePrivacy ? 'checked' : ''}}">✓</view>
-        <text>已阅读并同意《用户隐私条款》</text>
+        <text>已阅读并同意</text>
+        <text class="privacy-link" catchtap="openPrivacy">《用户隐私条款》</text>
       </view>
       <button class="btn full auth-primary finish" form-type="submit" disabled="{{submitting}}">
         {{submitting ? '提交中...' : '完成登录'}}
       </button>
     </form>
+    <button class="skip" bindtap="backStep">返回上一步</button>
   </view>
 </block>

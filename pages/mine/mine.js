@@ -1,3 +1,5 @@
+const { DEFAULT_AVATAR, displayAvatar, pickBestUser, userScore } = require('../../utils/user-display');
+
 Page({
   data: {
     user: null,
@@ -6,7 +8,7 @@ Page({
     isLogged: false,
     displayName: '微信用户',
     displayLevel: '普通用户',
-    displayAvatar: '/assets/images/login-avatar-eastern.png',
+    displayAvatar: DEFAULT_AVATAR,
     displayPhone: '',
     showServiceModal: false
   },
@@ -63,10 +65,6 @@ Page({
 
     const isLogged = !!(user && (user.openid || user._openid || user.phone || user.nickname));
     const phone = user && user.phone ? String(user.phone) : '';
-    const avatar = user && user.avatar && user.avatar.indexOf('http://tmp/') !== 0
-      ? user.avatar
-      : '/assets/images/login-avatar-eastern.png';
-
     this.setData({
       user,
       bookings,
@@ -74,25 +72,17 @@ Page({
       isLogged,
       displayName: user && user.nickname ? user.nickname : (isLogged ? '已登录用户' : '微信用户'),
       displayLevel: user && user.level ? user.level : '普通用户',
-      displayAvatar: avatar,
+      displayAvatar: displayAvatar(user),
       displayPhone: phone ? this.maskPhone(phone) : ''
     });
   },
 
   pickBestUser(list = [], fallback = null) {
-    const candidates = list.concat(fallback ? [fallback] : []);
-    if (!candidates.length) return fallback;
-    return candidates.sort((a, b) => this.userScore(b) - this.userScore(a))[0];
+    return pickBestUser(list, fallback);
   },
 
   userScore(user = {}) {
-    let score = 0;
-    if (user.nickname) score += 100;
-    if (user.avatar) score += 40;
-    if (user.phone || user.purePhone) score += 20;
-    if (user.birthday) score += 10;
-    if (user.updatedAt) score += 5;
-    return score;
+    return userScore(user);
   },
 
   maskPhone(phone) {
@@ -189,7 +179,7 @@ Page({
       isLogged: false,
       displayName: '微信用户',
       displayLevel: '普通用户',
-      displayAvatar: '/assets/images/login-avatar-eastern.png',
+      displayAvatar: DEFAULT_AVATAR,
       displayPhone: ''
     });
   },

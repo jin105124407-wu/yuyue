@@ -2,6 +2,19 @@ const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
+function buildCancelNoticeText(booking) {
+  const userSnapshot = booking.userSnapshot || {};
+  const customer = userSnapshot.nickname || '顾客';
+  const phone = userSnapshot.phone ? `，电话${userSnapshot.phone}` : '';
+  return [
+    '取消预约提醒',
+    `${customer}${phone}`,
+    `已取消${booking.serviceName || '预约项目'}`,
+    `原预约时间${booking.date || ''} ${booking.startTime || ''}`,
+    `服务美容师${booking.staffName || '未指定'}`
+  ].join('。');
+}
+
 exports.main = async (event = {}) => {
   const { OPENID } = cloud.getWXContext();
   const { bookingId } = event;
@@ -19,7 +32,12 @@ exports.main = async (event = {}) => {
       data: {
         status: 'canceled',
         canceledAt: db.serverDate(),
-        adminRead: false
+        adminRead: false,
+        voiceNoticeStatus: 'pending',
+        voiceNoticeType: 'canceled',
+        voiceNoticeText: buildCancelNoticeText(booking.data),
+        voiceNoticePlayedAt: null,
+        voiceNoticeError: ''
       }
     });
 

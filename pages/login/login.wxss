@@ -6,22 +6,46 @@ page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 84rpx 56rpx 112rpx;
+  padding: 56rpx 44rpx 72rpx;
   background:
-    radial-gradient(circle at 50% 32%, rgba(242, 247, 241, 0.82), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, rgba(242, 247, 241, 0.82), rgba(255, 255, 255, 0) 460rpx),
     #fff;
   color: var(--text);
+  box-sizing: border-box;
 }
 
 .login-page.phone,
 .login-page.birthday {
   justify-content: flex-start;
-  padding-top: 256rpx;
+  padding-top: 52rpx;
 }
 
 .login-page.profile {
   justify-content: flex-start;
-  padding-top: 260rpx;
+  padding-top: 52rpx;
+}
+
+.step-line {
+  display: flex;
+  justify-content: center;
+  gap: 14rpx;
+  margin: 4rpx 0 40rpx;
+}
+
+.step-dot {
+  width: 44rpx;
+  height: 8rpx;
+  border-radius: 999rpx;
+  background: #dfe7e3;
+}
+
+.step-dot.active {
+  width: 72rpx;
+  background: var(--brand);
+}
+
+.step-dot.done {
+  background: rgba(95, 127, 115, 0.46);
 }
 
 .login-identity {
@@ -29,21 +53,21 @@ page {
 }
 
 .login-mark {
-  width: 216rpx;
-  height: 216rpx;
+  width: 168rpx;
+  height: 168rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 40rpx;
-  border-radius: 26rpx;
+  margin: 0 auto 28rpx;
+  border-radius: 24rpx;
   color: #fff;
   background:
     linear-gradient(135deg, rgba(95, 127, 115, 0.96), rgba(63, 98, 88, 0.96)),
     radial-gradient(circle at 22% 20%, rgba(244, 232, 200, 0.45), transparent 28%);
   box-shadow: 0 24rpx 50rpx rgba(63, 98, 88, 0.16);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 30rpx;
+  font-size: 28rpx;
   line-height: 1.22;
   letter-spacing: 1.6rpx;
 }
@@ -52,23 +76,31 @@ page {
   display: block;
   margin: 0;
   text-align: center;
-  font-size: 48rpx;
+  font-size: 42rpx;
   font-weight: 700;
   letter-spacing: 0;
   white-space: nowrap;
 }
 
+.login-subtitle {
+  display: block;
+  margin-top: 16rpx;
+  color: var(--muted);
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
 .auth-form {
   width: 100%;
-  margin-top: 152rpx;
+  margin-top: 58rpx;
 }
 
 .login-page.birthday .auth-form {
-  margin-top: 172rpx;
+  margin-top: 56rpx;
 }
 
 .login-page.profile .auth-form {
-  margin-top: 132rpx;
+  margin-top: 46rpx;
 }
 
 .auth-copy {
@@ -81,7 +113,7 @@ page {
 
 .auth-field {
   width: 100%;
-  height: 100rpx;
+  height: 96rpx;
   display: flex;
   align-items: center;
   padding: 0 28rpx;
@@ -91,6 +123,7 @@ page {
   background: #fff;
   font-size: 30rpx;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .auth-field.placeholder {
@@ -106,10 +139,12 @@ page {
 }
 
 .auth-primary {
-  margin-top: 36rpx;
-  border-radius: 12rpx;
-  background: #aebdba;
-  font-size: 36rpx;
+  margin-top: 28rpx;
+  border-radius: 16rpx;
+  background: var(--brand);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 700;
   box-shadow: none;
 }
 
@@ -117,8 +152,50 @@ page {
   background: var(--brand);
 }
 
+.auth-primary[disabled],
+.auth-primary.ready[disabled] {
+  color: rgba(255, 255, 255, 0.9);
+  background: #b9c6c1;
+}
+
+.auth-secondary {
+  margin-top: 24rpx;
+  border: 1rpx solid rgba(95, 127, 115, 0.26);
+  border-radius: 16rpx;
+  color: var(--brand-deep);
+  background: #fff;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
 .finish {
   margin-top: 42rpx;
+}
+
+.divider {
+  position: relative;
+  height: 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 24rpx;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1rpx;
+  background: #e4e9e6;
+}
+
+.divider text {
+  position: relative;
+  padding: 0 20rpx;
+  background: #fff;
 }
 
 .zodiac-line {
@@ -137,9 +214,10 @@ page {
 }
 
 .profile-avatar {
-  width: 208rpx;
-  height: 208rpx;
-  margin: 0 auto 44rpx;
+  width: 168rpx;
+  height: 168rpx;
+  display: block;
+  margin: 0 auto 28rpx;
   border: 6rpx solid #eef1ef;
   border-radius: 999rpx;
   background: url("/assets/images/login-avatar-eastern.png") center 42% / cover no-repeat;
@@ -149,15 +227,16 @@ page {
 .agreement {
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  flex-wrap: wrap;
+  gap: 10rpx;
   margin: 28rpx 0 0;
   color: var(--text-2);
-  font-size: 28rpx;
+  font-size: 26rpx;
 }
 
 .checkbox {
-  width: 44rpx;
-  height: 44rpx;
+  width: 40rpx;
+  height: 40rpx;
   display: grid;
   place-items: center;
   border: 3rpx solid #ccd4d0;
@@ -173,10 +252,27 @@ page {
   background: var(--brand);
 }
 
+.privacy-link {
+  color: var(--brand-deep);
+  font-weight: 700;
+}
+
 .skip {
   align-self: center;
   margin-top: auto;
+  padding: 22rpx 0 0;
   color: var(--brand-deep);
   background: transparent;
-  font-size: 30rpx;
+  font-size: 28rpx;
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 42rpx;
+  margin-top: auto;
+}
+
+.footer-actions .skip {
+  margin-top: 0;
 }

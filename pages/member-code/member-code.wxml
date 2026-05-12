@@ -3,7 +3,7 @@
     <view class="qr-page-bg">
       <view class="qr-spacer"></view>
       <view class="qr-card card">
-        <image class="avatar" src="/assets/images/login-avatar-eastern.png" mode="aspectFill"></image>
+        <image class="avatar qr-avatar" src="{{displayAvatar}}" mode="aspectFill"></image>
         <text class="tag">普通用户</text>
         <text class="qr-name">{{nickname ? nickname : '微信用户'}}</text>
         <view class="qr-icon-large"></view>

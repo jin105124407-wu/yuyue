@@ -2,7 +2,9 @@
   <view class="content">
     <view class="points-hero">
       <view><text class="points-num">0 积分</text><text>积分功能暂未开放</text></view>
-      <view class="gift-mark">礼</view>
+      <view class="gift-mark points-badge">
+        <view class="badge-star"></view>
+      </view>
     </view>
     <view class="task-list card">
       <text class="task-title">积分任务</text>
@@ -12,7 +14,9 @@
     </view>
     <view class="empty-card card">
       <view>
-        <view class="empty-icon">礼</view>
+        <view class="empty-icon points-icon">
+          <view class="points-star"></view>
+        </view>
         <text class="empty-title">积分专区暂未开放</text>
         <text class="empty-desc">后续可用于兑换护理福利</text>
         <button class="btn" bindtap="goHome">返回首页</button>

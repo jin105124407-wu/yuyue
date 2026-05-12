@@ -357,22 +357,6 @@
   height: 100%;
 }
 
-.store-photo::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 48rpx;
-  right: 48rpx;
-  bottom: 44rpx;
-  height: 104rpx;
-  border: 2rpx solid rgba(255, 248, 229, 0.42);
-  border-radius: 8rpx;
-  background:
-    linear-gradient(90deg, rgba(255, 248, 229, 0.18), transparent 38%, rgba(255, 248, 229, 0.14)),
-    linear-gradient(180deg, rgba(31, 57, 48, 0.36), rgba(31, 57, 48, 0.12));
-  box-shadow: 0 24rpx 36rpx rgba(24, 43, 36, 0.18);
-}
-
 .store-photo::after {
   z-index: 2;
   background:

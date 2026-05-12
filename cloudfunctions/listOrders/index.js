@@ -9,6 +9,14 @@ async function isAdmin(openid) {
   return r.data.length > 0;
 }
 
+function normalizeBooking(item) {
+  if (!item) return item;
+  return {
+    ...item,
+    staffName: !item.staffName || item.staffName === '小美老师' ? '芬芬' : item.staffName
+  };
+}
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
   if (!(await isAdmin(OPENID))) return { ok: false, reason: '无权限' };
@@ -30,5 +38,5 @@ exports.main = async (event) => {
     .skip(skip).limit(limit)
     .get();
 
-  return { ok: true, list: res.data };
+  return { ok: true, list: (res.data || []).map(normalizeBooking) };
 };

@@ -9,9 +9,17 @@ Page({
   },
 
   async fetchList() {
-    const db = wx.cloud.database();
-    const res = await db.collection('staff').orderBy('sortOrder', 'asc').get();
-    this.setData({ list: res.data });
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'manageService',
+        data: { collection: 'staff', action: 'list' }
+      });
+      const r = res.result || {};
+      this.setData({ list: r.ok ? (r.list || []) : [] });
+      if (!r.ok) wx.showToast({ title: r.reason || '加载失败', icon: 'none' });
+    } catch (e) {
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    }
   },
 
   onAdd() {

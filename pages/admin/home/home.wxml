@@ -1,11 +1,27 @@
 <view class="admin-home">
   <view wx:if="{{!isAdmin}}" class="no-admin">
-    <text>您不是管理员，无权查看此页。</text>
+    <text class="no-admin-title">您不是管理员，无权查看此页。</text>
+    <text class="no-admin-desc">调试后台前，请先把当前微信 openid 加入云数据库 admins 集合。</text>
+    <view class="openid-box">
+      <text class="openid-label">当前 openid</text>
+      <text class="openid-value">{{openid || '正在获取，请稍后刷新'}}</text>
+    </view>
+    <view class="admin-actions">
+      <button class="admin-btn" bindtap="copyOpenid">复制 openid</button>
+      <button class="admin-btn primary" bindtap="initMeAdmin" loading="{{initializingAdmin}}">首次初始化我为管理员</button>
+    </view>
+    <text wx:if="{{adminTip}}" class="admin-tip">{{adminTip}}</text>
   </view>
   <block wx:else>
     <view class="header">
-      <text class="title">工作台</text>
-      <text class="date">{{today}}</text>
+      <view>
+        <text class="eyebrow">Moyo Admin</text>
+        <text class="title">工作台</text>
+      </view>
+      <view class="header-side">
+        <text class="date">{{today}}</text>
+        <view class="exit-admin" bindtap="exitAdminMode">退出后台</view>
+      </view>
     </view>
 
     <view class="stat-grid">
@@ -25,16 +41,24 @@
 
     <view class="action-grid">
       <view class="action-item" bindtap="goOrders">
-        <text class="action-icon">📋</text>
+        <view class="action-icon icon-orders"></view>
         <text class="action-name">订单管理</text>
+        <text class="action-desc">查看预约、确认与取消</text>
+      </view>
+      <view class="action-item" bindtap="goVoice">
+        <view class="action-icon icon-voice"></view>
+        <text class="action-name">语音播报</text>
+        <text class="action-desc">监听新预约并播报</text>
       </view>
       <view class="action-item" bindtap="goServices">
-        <text class="action-icon">💆</text>
+        <view class="action-icon icon-services"></view>
         <text class="action-name">项目管理</text>
+        <text class="action-desc">维护护理项目与时长</text>
       </view>
       <view class="action-item" bindtap="goStaff">
-        <text class="action-icon">👩</text>
+        <view class="action-icon icon-staff"></view>
         <text class="action-name">美容师管理</text>
+        <text class="action-desc">维护人员与排序</text>
       </view>
     </view>
   </block>

@@ -32,6 +32,17 @@
   margin: -108rpx auto 16rpx;
 }
 
+.qr-card .qr-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  display: block;
+  background: #fffaf1 url("/assets/images/login-avatar-eastern.png") center 42% / cover no-repeat;
+  border: 6rpx solid rgba(255, 255, 255, 0.84);
+  border-radius: 50%;
+  box-shadow: 0 16rpx 36rpx rgba(63, 98, 88, 0.16);
+  overflow: hidden;
+}
+
 .qr-card .tag {
   margin-bottom: 16rpx;
 }
