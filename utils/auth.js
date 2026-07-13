@@ -8,6 +8,30 @@ function isAdmin() {
   return !!wx.getStorageSync('isAdmin');
 }
 
+function isMemberLogged() {
+  return hasMemberProfile(wx.getStorageSync('userInfo'));
+}
+
+function showLoginRequired(content) {
+  wx.showModal({
+    title: '请先登录',
+    content: content || '登录后才能预约服务。',
+    confirmText: '去登录',
+    cancelText: '稍后',
+    success(res) {
+      if (res.confirm) {
+        wx.navigateTo({ url: '/pages/login/login' });
+      }
+    }
+  });
+}
+
+function requireMemberLogin(content) {
+  if (isMemberLogged()) return true;
+  showLoginRequired(content);
+  return false;
+}
+
 function ensureLogin() {
   const openid = getOpenid();
   if (openid) return Promise.resolve(openid);
@@ -26,4 +50,4 @@ function ensureLogin() {
   });
 }
 
-module.exports = { getOpenid, isAdmin, ensureLogin };
+module.exports = { getOpenid, isAdmin, isMemberLogged, requireMemberLogin, ensureLogin };

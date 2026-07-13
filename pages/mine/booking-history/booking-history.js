@@ -1,3 +1,5 @@
+const { requireMemberLogin } = require('../../../utils/auth');
+
 Page({
   data: {
     activeTab: 'booked',
@@ -140,6 +142,7 @@ Page({
   },
 
   goBooking() {
+    if (!requireMemberLogin()) return;
     wx.navigateTo({ url: '/pages/booking/booking' });
   }
 });

@@ -1,6 +1,7 @@
 const app = getApp();
 const { getZodiac } = require('../../utils/zodiac');
 const { DEFAULT_AVATAR, displayAvatar, pickBestUser, safeAvatar, hasMemberProfile, memberDisplayName } = require('../../utils/user-display');
+const { requireMemberLogin } = require('../../utils/auth');
 
 function todayStr() {
   const d = new Date();
@@ -270,7 +271,10 @@ Page({
     wx.navigateTo({ url: '/pages/login/login' });
   },
 
-  goBooking() { wx.navigateTo({ url: '/pages/booking/booking' }); },
+  goBooking() {
+    if (!requireMemberLogin()) return;
+    wx.navigateTo({ url: '/pages/booking/booking' });
+  },
   goReferral() { wx.showToast({ title: '推荐有礼功能即将开放', icon: 'none' }); },
   goReward() { wx.showToast({ title: '参与任务得奖励功能即将开放', icon: 'none' }); },
   goPoints() { wx.switchTab({ url: '/pages/points/points' }); },

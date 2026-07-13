@@ -16,6 +16,23 @@ function minToHHmm(n) {
 }
 function overlap(a1, a2, b1, b2) { return a1 < b2 && b1 < a2; }
 function normalizeStaffName(name) { return !name || name === '小美老师' ? '芬芬' : name; }
+function userScore(user = {}) {
+  let score = 0;
+  if (user.nickname) score += 100;
+  if (user.name) score += 80;
+  if (user.avatar) score += 40;
+  if (user.phone || user.purePhone) score += 20;
+  if (user.birthday) score += 10;
+  if (user.updatedAt) score += 5;
+  return score;
+}
+function pickBestUser(list = []) {
+  if (!list.length) return null;
+  return list.sort((a, b) => userScore(b) - userScore(a))[0];
+}
+function hasMemberProfile(user = {}) {
+  return !!(user && (user.nickname || user.name || user.phone || user.purePhone));
+}
 function buildVoiceNoticeText(booking) {
   const customer = booking.userSnapshot.nickname || '顾客';
   const phone = booking.userSnapshot.phone ? `，电话${booking.userSnapshot.phone}` : '';
@@ -38,6 +55,12 @@ exports.main = async (event) => {
   }
   if (DISABLED_SLOTS.indexOf(startTime) >= 0) {
     return { ok: false, reason: '该时间段不可预约' };
+  }
+
+  const userRes = await db.collection('users').where({ openid: OPENID }).limit(20).get();
+  const user = pickBestUser(userRes.data || []);
+  if (!hasMemberProfile(user)) {
+    return { ok: false, reason: '请先登录后再预约' };
   }
 
   // 取项目
@@ -69,9 +92,6 @@ exports.main = async (event) => {
     }
   }
 
-  // 取用户快照
-  const userRes = await db.collection('users').where({ openid: OPENID }).limit(1).get();
-  const user = userRes.data[0] || {};
   const orderNo = buildOrderNo(date);
 
   const bookingData = {

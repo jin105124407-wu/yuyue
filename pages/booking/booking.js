@@ -1,5 +1,6 @@
 const { TIME_ROWS, DISABLED_SLOTS } = require('../../utils/constants');
 const { buildDateList, validateBooking, buildUnavailableMap, hhmmToMin } = require('../../utils/time');
+const { requireMemberLogin } = require('../../utils/auth');
 
 const BOOKING_TIME_ROWS = [
   { icon: 'sunrise', symbol: '◒', times: TIME_ROWS[0] },
@@ -219,6 +220,7 @@ Page({
 
   async onSubmit() {
     const { selectedStaffId, selectedServiceId, selectedDate, selectedTime, services, staff, remark } = this.data;
+    if (!requireMemberLogin()) return;
     if (!selectedStaffId) return wx.showToast({ title: '请选择美容师', icon: 'none' });
     if (!selectedServiceId) return wx.showToast({ title: '请选择项目', icon: 'none' });
     if (!selectedDate || !selectedTime) return wx.showToast({ title: '请选择预约时间', icon: 'none' });

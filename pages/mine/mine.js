@@ -1,4 +1,5 @@
 const { DEFAULT_AVATAR, displayAvatar, pickBestUser, userScore, hasMemberProfile, memberDisplayName } = require('../../utils/user-display');
+const { requireMemberLogin } = require('../../utils/auth');
 
 Page({
   data: {
@@ -103,6 +104,7 @@ Page({
   },
 
   goBooking() {
+    if (!requireMemberLogin()) return;
     wx.navigateTo({ url: '/pages/booking/booking' });
   },
 

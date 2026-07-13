@@ -15,6 +15,13 @@ function loadPage(filePath, wxMock) {
     Page(def) {
       pageDef = def;
     },
+    getApp() {
+      return { globalData: {} };
+    },
+    require(name) {
+      if (name.indexOf('.') === 0) return require(path.resolve(path.dirname(filePath), name));
+      return require(name);
+    },
     wx: wxMock || {}
   };
   vm.createContext(context);
@@ -38,6 +45,7 @@ function loadCloudFunction(filePath, cloudMock) {
     exports: module.exports,
     require(name) {
       if (name === 'wx-server-sdk') return cloudMock;
+      if (name.indexOf('.') === 0) return require(path.resolve(path.dirname(filePath), name));
       return require(name);
     }
   };
@@ -148,12 +156,151 @@ async function testManageServiceRemoveSoftDisablesItem() {
   });
 }
 
+async function testCreateBookingRejectsUserWithoutMemberProfile() {
+  const added = [];
+  const db = {
+    command: {
+      in(list) {
+        return { $in: list };
+      }
+    },
+    collection(name) {
+      if (name === 'services') {
+        return {
+          doc() {
+            return {
+              get: async () => ({
+                data: { _id: 'svc-1', name: '清洁补水', durationMin: 60, price: 0 }
+              })
+            };
+          }
+        };
+      }
+      if (name === 'staff') {
+        return {
+          doc() {
+            return {
+              get: async () => ({
+                data: { _id: 'staff-1', name: '芬芬', avatar: '' }
+              })
+            };
+          }
+        };
+      }
+      if (name === 'bookings') {
+        return {
+          where() {
+            return {
+              get: async () => ({ data: [] })
+            };
+          },
+          add: async payload => {
+            added.push(payload);
+            return { _id: 'booking-1' };
+          }
+        };
+      }
+      if (name === 'users') {
+        return {
+          where() {
+            return {
+              limit() {
+                return {
+                  get: async () => ({ data: [{ openid: 'openid-only' }] })
+                };
+              }
+            };
+          }
+        };
+      }
+      return {
+        where() {
+          return {
+            get: async () => ({ data: [] })
+          };
+        }
+      };
+    },
+    serverDate() {
+      return 'server-date';
+    }
+  };
+  const cloud = {
+    DYNAMIC_CURRENT_ENV: 'test',
+    init() {},
+    database() {
+      return db;
+    },
+    getWXContext() {
+      return { OPENID: 'openid-only' };
+    }
+  };
+  const mod = loadCloudFunction(path.join(root, 'cloudfunctions/createBooking/index.js'), cloud);
+
+  const res = await mod.main({
+    staffId: 'staff-1',
+    serviceId: 'svc-1',
+    date: '2026-07-13',
+    startTime: '10:00'
+  });
+
+  assert.strictEqual(res.ok, false);
+  assert.strictEqual(res.reason, '请先登录后再预约');
+  assert.strictEqual(added.length, 0);
+}
+
+async function testBookingSubmitPromptsLoginBeforeCloudCall() {
+  let modal = null;
+  let cloudCalled = false;
+  const wxMock = {
+    getStorageSync(key) {
+      if (key === 'userInfo') return null;
+      return '';
+    },
+    showModal(options) {
+      modal = options;
+    },
+    showToast() {},
+    cloud: {
+      callFunction: async () => {
+        cloudCalled = true;
+        return { result: { ok: false, reason: '不应调用云函数' } };
+      }
+    }
+  };
+  const previousWx = global.wx;
+  global.wx = wxMock;
+  const page = loadPage(path.join(root, 'pages/booking/booking.js'), wxMock);
+  Object.assign(page.data, {
+    selectedStaffId: 'staff-1',
+    selectedServiceId: 'svc-1',
+    selectedDate: '2026-07-13',
+    selectedTime: '10:00',
+    services: [{ _id: 'svc-1', name: '清洁补水', durationMin: 60 }],
+    staff: [{ _id: 'staff-1', name: '芬芬' }],
+    existingBookings: []
+  });
+
+  try {
+    await page.onSubmit();
+  } finally {
+    global.wx = previousWx;
+  }
+
+  assert.strictEqual(cloudCalled, false);
+  assert.ok(modal);
+  assert.strictEqual(modal.title, '请先登录');
+  assert.strictEqual(modal.confirmText, '去登录');
+}
+
 async function run() {
   const tests = [
     testBookingUnavailableMapIncludesForwardOverlap,
     testOrderNoUsesUniqueSuffixInsteadOfDailyCount,
     testVoiceAlertEndMarksCurrentNoticePlayed,
-    testManageServiceRemoveSoftDisablesItem
+    testManageServiceRemoveSoftDisablesItem,
+    testBookingSubmitPromptsLoginBeforeCloudCall,
+    testCreateBookingRejectsUserWithoutMemberProfile
   ];
   for (const test of tests) {
     await test();
