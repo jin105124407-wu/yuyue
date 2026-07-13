@@ -26,10 +26,23 @@ function displayAvatar(user) {
   return safeAvatar(user && user.avatar) || DEFAULT_AVATAR;
 }
 
+function hasMemberProfile(user = {}) {
+  return !!(user && (user.nickname || user.name || user.phone || user.purePhone));
+}
+
+function memberDisplayName(user = {}) {
+  if (!user) return '微信用户';
+  if (user.nickname) return user.nickname;
+  if (user.name) return user.name;
+  return hasMemberProfile(user) ? '已登录用户' : '微信用户';
+}
+
 module.exports = {
   DEFAULT_AVATAR,
   safeAvatar,
   userScore,
   pickBestUser,
-  displayAvatar
+  displayAvatar,
+  hasMemberProfile,
+  memberDisplayName
 };

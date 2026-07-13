@@ -18,17 +18,58 @@ function pickBestUser(list = []) {
   return list.sort((a, b) => userScore(b) - userScore(a))[0];
 }
 
+function unique(list) {
+  return Array.from(new Set(list.filter(Boolean)));
+}
+
+function phoneCandidatesFromUser(user = {}) {
+  const raw = [user.phone, user.purePhone];
+  const out = [];
+  raw.forEach(value => {
+    const text = String(value || '').trim();
+    const digits = text.replace(/\D/g, '');
+    if (text) out.push(text);
+    if (digits) out.push(digits);
+    if (digits.length === 13 && digits.indexOf('86') === 0) out.push(digits.slice(2));
+  });
+  return unique(out);
+}
+
+async function hasAdminOpenid(openid) {
+  if (!openid) return false;
+  try {
+    const adminRes = await db.collection('admins').where({ openid }).count();
+    return adminRes.total > 0;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function hasAdminPhone(phone) {
+  if (!phone) return false;
+  try {
+    const phoneRes = await db.collection('admins').where({ phone }).count();
+    if (phoneRes.total > 0) return true;
+    const purePhoneRes = await db.collection('admins').where({ purePhone: phone }).count();
+    return purePhoneRes.total > 0;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function isAdminUser(openid, user) {
+  if (await hasAdminOpenid(openid)) return true;
+  const phones = phoneCandidatesFromUser(user || {});
+  for (const phone of phones) {
+    if (await hasAdminPhone(phone)) return true;
+  }
+  return false;
+}
+
 exports.main = async (event = {}) => {
   const { OPENID } = cloud.getWXContext();
   const profile = event.profile || null;
   let isAdmin = false;
-  try {
-    const adminRes = await db.collection('admins').where({ openid: OPENID }).count();
-    isAdmin = adminRes.total > 0;
-  } catch (e) {
-    // admins 集合未创建时不报错
-    isAdmin = false;
-  }
 
   // 顾客首次登录只返回身份；只有传入 profile 时才创建/更新用户资料。
   let user = null;
@@ -36,6 +77,7 @@ exports.main = async (event = {}) => {
     const userRes = await db.collection('users').where({ openid: OPENID }).limit(20).get();
     user = pickBestUser(userRes.data || []);
     if (!profile) {
+      isAdmin = await isAdminUser(OPENID, user);
       return { openid: OPENID, isAdmin, ok: true, user: user || null };
     }
 
@@ -73,6 +115,7 @@ exports.main = async (event = {}) => {
       await db.collection('users').doc(user._id).update({ data: profileData });
       user = { ...user, ...profileData };
     }
+    isAdmin = await isAdminUser(OPENID, user);
   } catch (e) {
     return { openid: OPENID, isAdmin, ok: false, reason: e.message || String(e) };
   }

@@ -33,7 +33,7 @@
             wx:for="{{row.times}}"
             wx:for-item="t"
             wx:key="*this"
-            class="time-cell {{disabledSlots.indexOf(t) >= 0 ? 'disabled' : ''}} {{occupiedMap[t] ? 'disabled' : ''}} {{selectedTime === t ? 'active' : ''}}"
+            class="time-cell {{disabledSlots.indexOf(t) >= 0 ? 'disabled' : ''}} {{occupiedMap[t] ? 'disabled' : ''}} {{unavailableMap[t] ? 'disabled' : ''}} {{selectedTime === t ? 'active' : ''}}"
             data-time="{{t}}"
             bindtap="onTimeTap">
             <text>{{t}}</text>

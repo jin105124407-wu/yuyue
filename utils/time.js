@@ -57,6 +57,14 @@ function validateBooking(startHHmm, durationMin, existing = []) {
   return { ok: true };
 }
 
+function buildUnavailableMap(times = [], durationMin, existing = []) {
+  const out = {};
+  times.forEach(time => {
+    out[time] = !validateBooking(time, durationMin, existing).ok;
+  });
+  return out;
+}
+
 // 生成今天 + 未来 N 天的日期列表
 function buildDateList(days = 30) {
   const WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
@@ -85,5 +93,6 @@ module.exports = {
   computeEnd,
   occupiedRange,
   validateBooking,
+  buildUnavailableMap,
   buildDateList
 };

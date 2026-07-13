@@ -28,7 +28,7 @@
       </view>
       <view class="user-meta">
         <view class="user-row">
-          <text class="user-name">你好，{{logged ? userInfo.nickname : '微信用户'}}</text>
+          <text class="user-name">你好，{{displayName}}</text>
         </view>
         <text class="muted">{{logged ? '欢迎回来，可查看预约记录' : '您还未登录，请先登录'}}</text>
       </view>

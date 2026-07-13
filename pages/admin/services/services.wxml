@@ -19,7 +19,7 @@
       </view>
       <view class="item-actions">
         <view class="action" bindtap="onEdit" data-item="{{item}}">编辑</view>
-        <view class="action danger" bindtap="onRemove" data-id="{{item._id}}">删除</view>
+        <view class="action danger" bindtap="onRemove" data-id="{{item._id}}">停用</view>
       </view>
     </view>
     <view wx:if="{{list.length === 0}}" class="empty-state">

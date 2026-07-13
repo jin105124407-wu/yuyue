@@ -18,11 +18,14 @@ exports.main = async (event) => {
     db.collection('services').where({ enabled: _.neq(false) }).orderBy('sortOrder', 'asc').get()
   ]);
 
+  const firstStaff = staffRes.data && staffRes.data[0];
+  const selectedStaffId = staffId || (firstStaff && firstStaff._id) || '';
+
   let existingBookings = [];
-  if (date && staffId) {
+  if (date && selectedStaffId) {
     const bookingRes = await db.collection('bookings').where({
       date,
-      staffId,
+      staffId: selectedStaffId,
       status: _.in(['pending', 'confirmed', 'done'])
     }).field({ startTime: true, durationMin: true, endTime: true }).get();
     existingBookings = bookingRes.data;
@@ -34,6 +37,7 @@ exports.main = async (event) => {
       name: normalizeStaffName(item.name)
     })),
     services: serviceRes.data,
+    selectedStaffId,
     existingBookings
   };
 };

@@ -1,4 +1,5 @@
 // 登录与身份辅助
+const { hasMemberProfile } = require('./user-display');
 function getOpenid() {
   return wx.getStorageSync('openid') || '';
 }
@@ -18,7 +19,7 @@ function ensureLogin() {
     const oid = result.openid;
     wx.setStorageSync('openid', oid);
     wx.setStorageSync('isAdmin', !!result.isAdmin);
-    if (result.user && result.user.nickname) {
+    if (result.user && hasMemberProfile(result.user)) {
       wx.setStorageSync('userInfo', result.user);
     }
     return oid;

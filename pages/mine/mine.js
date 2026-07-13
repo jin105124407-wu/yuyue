@@ -1,4 +1,4 @@
-const { DEFAULT_AVATAR, displayAvatar, pickBestUser, userScore } = require('../../utils/user-display');
+const { DEFAULT_AVATAR, displayAvatar, pickBestUser, userScore, hasMemberProfile, memberDisplayName } = require('../../utils/user-display');
 
 Page({
   data: {
@@ -63,14 +63,14 @@ Page({
       }
     }
 
-    const isLogged = !!(user && (user.openid || user._openid || user.phone || user.nickname));
+    const isLogged = hasMemberProfile(user);
     const phone = user && user.phone ? String(user.phone) : '';
     this.setData({
       user,
       bookings,
       activeBookingCount: bookings.filter(item => item && item.status !== 'canceled').length,
       isLogged,
-      displayName: user && user.nickname ? user.nickname : (isLogged ? '已登录用户' : '微信用户'),
+      displayName: memberDisplayName(user),
       displayLevel: user && user.level ? user.level : '普通用户',
       displayAvatar: displayAvatar(user),
       displayPhone: phone ? this.maskPhone(phone) : ''

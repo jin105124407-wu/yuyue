@@ -1,5 +1,5 @@
 const { TIME_ROWS, DISABLED_SLOTS } = require('../../utils/constants');
-const { buildDateList, validateBooking, hhmmToMin } = require('../../utils/time');
+const { buildDateList, validateBooking, buildUnavailableMap, hhmmToMin } = require('../../utils/time');
 
 const BOOKING_TIME_ROWS = [
   { icon: 'sunrise', symbol: '◒', times: TIME_ROWS[0] },
@@ -7,6 +7,8 @@ const BOOKING_TIME_ROWS = [
   { icon: 'sunset', symbol: '◐', times: TIME_ROWS[2] },
   { icon: 'cup', symbol: '♨', times: TIME_ROWS[3] }
 ];
+
+const ALL_TIMES = TIME_ROWS.reduce((all, row) => all.concat(row), []);
 
 const FALLBACK_SERVICES = [
   {
@@ -88,6 +90,8 @@ Page({
     selectedDate: '',
     selectedTime: '15:30',
     occupiedMap: {},   // { 'HH:mm': true }
+    unavailableMap: {},
+    existingBookings: [],
     remark: '',
     submitting: false,
     resultModal: null  // 成功弹窗数据
@@ -122,9 +126,9 @@ Page({
       }));
       const services = (r.services && r.services.length) ? r.services : FALLBACK_SERVICES;
       const existingBookings = r.existingBookings || [];
-      const patch = { staff, services };
+      const patch = { staff, services, existingBookings };
       if (!this.data.selectedStaffId && staff.length > 0) {
-        patch.selectedStaffId = staff[0]._id;
+        patch.selectedStaffId = r.selectedStaffId || staff[0]._id;
       }
       const nextStaffId = patch.selectedStaffId || this.data.selectedStaffId;
       patch.currentStaff = staff.find(item => item._id === nextStaffId) || null;
@@ -138,8 +142,10 @@ Page({
       console.error(e);
       this.setData({
         services: FALLBACK_SERVICES,
-        selectedServiceId: this.data.selectedServiceId || FALLBACK_SERVICES[0]._id
+        selectedServiceId: this.data.selectedServiceId || FALLBACK_SERVICES[0]._id,
+        existingBookings: []
       });
+      this.computeOccupiedMap([]);
       wx.showToast({ title: '已使用默认预约项目', icon: 'none' });
     } finally {
       wx.hideLoading();
@@ -156,7 +162,11 @@ Page({
         if (tm >= s && tm < e) occupied[t] = true;
       }));
     });
-    this.setData({ occupiedMap: occupied });
+    const service = this.data.services.find(s => s._id === this.data.selectedServiceId);
+    const unavailableMap = service
+      ? buildUnavailableMap(ALL_TIMES, service.durationMin, existingBookings)
+      : {};
+    this.setData({ occupiedMap: occupied, unavailableMap });
   },
 
   onStaffTap(e) {
@@ -179,19 +189,28 @@ Page({
       wx.showToast({ title: '该时段已被预约', icon: 'none' });
       return;
     }
+    if (this.data.unavailableMap[t]) {
+      wx.showToast({ title: '时间不足，请选择其他时间段或日期哦', icon: 'none' });
+      return;
+    }
     this.setData({ selectedTime: t });
   },
 
   onServiceTap(e) {
     const id = e.currentTarget.dataset.id;
-    this.setData({ selectedServiceId: id });
     const service = this.data.services.find(s => s._id === id);
+    const unavailableMap = service
+      ? buildUnavailableMap(ALL_TIMES, service.durationMin, this.data.existingBookings)
+      : {};
+    const patch = { selectedServiceId: id, unavailableMap };
     if (this.data.selectedTime && service) {
-      const check = validateBooking(this.data.selectedTime, service.durationMin, []);
+      const check = validateBooking(this.data.selectedTime, service.durationMin, this.data.existingBookings);
       if (!check.ok) {
         wx.showToast({ title: check.reason, icon: 'none' });
+        patch.selectedTime = '';
       }
     }
+    this.setData(patch);
   },
 
   onRemarkInput(e) {
@@ -205,7 +224,7 @@ Page({
     if (!selectedDate || !selectedTime) return wx.showToast({ title: '请选择预约时间', icon: 'none' });
 
     const service = services.find(s => s._id === selectedServiceId);
-    const preCheck = validateBooking(selectedTime, service.durationMin, []);
+    const preCheck = validateBooking(selectedTime, service.durationMin, this.data.existingBookings);
     if (!preCheck.ok) {
       wx.showModal({ title: '提示', content: preCheck.reason, showCancel: false });
       return;

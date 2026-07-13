@@ -165,6 +165,16 @@ Page({
   async onAudioEnded() {
     if (audioMode === 'alert') {
       audioMode = '';
+      const notice = this.data.currentNotice;
+      if (!notice) return;
+      await this.markPlayed(notice._id, 'played');
+      this.setData({
+        speaking: false,
+        currentNotice: null,
+        queue: this.data.queue.filter(item => item._id !== notice._id),
+        statusText: '播报完成，继续监听新预约。'
+      });
+      this.pollNow();
       return;
     }
     audioMode = '';

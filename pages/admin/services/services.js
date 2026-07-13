@@ -67,7 +67,7 @@ Page({
 
   async onRemove(e) {
     const id = e.currentTarget.dataset.id;
-    const confirm = await new Promise(r => wx.showModal({ title: '确认删除？', content: '删除后不可恢复', success: x => r(x.confirm) }));
+    const confirm = await new Promise(r => wx.showModal({ title: '确认停用？', content: '停用后顾客预约页不再展示，可在编辑中重新启用。', success: x => r(x.confirm) }));
     if (!confirm) return;
     await wx.cloud.callFunction({
       name: 'manageService',

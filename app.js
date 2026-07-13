@@ -1,4 +1,6 @@
 // app.js
+const { hasMemberProfile } = require('./utils/user-display');
+
 App({
   globalData: {
     openid: '',
@@ -39,9 +41,14 @@ App({
         this.globalData.openid = openid;
         this.globalData.isAdmin = !!isAdmin;
         this.globalData.adminMode = wx.getStorageSync('adminMode') !== false && !!isAdmin;
-        this.globalData.userInfo = wx.getStorageSync('userInfo') || null;
+        const cachedUser = wx.getStorageSync('userInfo') || null;
+        const nextUser = hasMemberProfile(user) ? user : cachedUser;
+        this.globalData.userInfo = nextUser || null;
         wx.setStorageSync('openid', this.globalData.openid);
         wx.setStorageSync('isAdmin', this.globalData.isAdmin);
+        if (hasMemberProfile(user)) {
+          wx.setStorageSync('userInfo', user);
+        }
 
         const pages = getCurrentPages();
         const page = pages[pages.length - 1];

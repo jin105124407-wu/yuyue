@@ -1,6 +1,6 @@
 const app = getApp();
 const { getZodiac } = require('../../utils/zodiac');
-const { DEFAULT_AVATAR, displayAvatar, pickBestUser, safeAvatar } = require('../../utils/user-display');
+const { DEFAULT_AVATAR, displayAvatar, pickBestUser, safeAvatar, hasMemberProfile, memberDisplayName } = require('../../utils/user-display');
 
 function todayStr() {
   const d = new Date();
@@ -14,6 +14,7 @@ Page({
     store: {},
     userInfo: null,
     displayAvatar: DEFAULT_AVATAR,
+    displayName: '微信用户',
     logged: false,
     agreePrivacy: false,
     phoneAuthTip: '',
@@ -50,28 +51,38 @@ Page({
   async refreshUser() {
     const openid = wx.getStorageSync('openid');
     if (!openid) {
-      this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR });
+      this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR, displayName: '微信用户' });
       return;
     }
     const cachedUser = wx.getStorageSync('userInfo');
-    if (cachedUser && cachedUser.nickname) {
+    if (hasMemberProfile(cachedUser)) {
       cachedUser.avatar = safeAvatar(cachedUser.avatar);
-      this.setData({ logged: true, userInfo: cachedUser, displayAvatar: displayAvatar(cachedUser) });
+      this.setData({
+        logged: true,
+        userInfo: cachedUser,
+        displayAvatar: displayAvatar(cachedUser),
+        displayName: memberDisplayName(cachedUser)
+      });
     }
     const db = wx.cloud.database();
     try {
-      const r = await db.collection('users').where({ openid }).limit(1).get();
+      const r = await db.collection('users').where({ openid }).limit(20).get();
       const u = pickBestUser(r.data || [], cachedUser || null);
-      if (u && u.nickname) {
+      if (hasMemberProfile(u)) {
         u.avatar = safeAvatar(u.avatar);
         wx.setStorageSync('userInfo', u);
-        this.setData({ logged: true, userInfo: u, displayAvatar: displayAvatar(u) });
-      } else if (!cachedUser) {
-        this.setData({ logged: false, userInfo: u || null, displayAvatar: DEFAULT_AVATAR });
+        this.setData({
+          logged: true,
+          userInfo: u,
+          displayAvatar: displayAvatar(u),
+          displayName: memberDisplayName(u)
+        });
+      } else {
+        this.setData({ logged: false, userInfo: u || null, displayAvatar: DEFAULT_AVATAR, displayName: '微信用户' });
       }
     } catch (e) {
       console.warn('refreshUser failed', e);
-      if (!cachedUser) this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR });
+      if (!cachedUser) this.setData({ logged: false, userInfo: null, displayAvatar: DEFAULT_AVATAR, displayName: '微信用户' });
     }
   },
 
@@ -197,6 +208,7 @@ Page({
       nickname,
       avatar: u.avatar || '',
       phone: u.phone || '',
+      purePhone: u.purePhone || u.phone || '',
       birthday: u.birthday || '',
       zodiac: u.zodiac || ''
     });
@@ -211,24 +223,40 @@ Page({
       return;
     }
 
-    const openid = wx.getStorageSync('openid');
-    const db = wx.cloud.database();
-    const exist = await db.collection('users').where({ openid }).limit(1).get();
     const payload = {
       nickname: profile.nickname,
       avatar: profile.avatar,
       phone: profile.phone,
+      purePhone: profile.purePhone || profile.phone,
       birthday: profile.birthday,
       zodiac: profile.zodiac,
-      privacyAgreed: true,
-      privacyAgreedAt: db.serverDate()
+      privacyAgreed: true
     };
-    if (exist.data.length) {
-      await db.collection('users').doc(exist.data[0]._id).update({ data: payload });
-    } else {
-      await db.collection('users').add({
-        data: Object.assign({ openid, level: '普通会员', totalSpent: 0, createdAt: db.serverDate() }, payload)
-      });
+    const res = await wx.cloud.callFunction({
+      name: 'login',
+      data: { profile: payload }
+    });
+    const r = res.result || {};
+    if (!r.ok || !r.openid) {
+      wx.showToast({ title: r.reason || '登录失败', icon: 'none' });
+      return;
+    }
+
+    const savedUser = r.user || Object.assign({
+      openid: r.openid,
+      level: '普通会员'
+    }, payload);
+    const app = getApp();
+    if (app && app.globalData) {
+      app.globalData.openid = r.openid;
+      app.globalData.isAdmin = !!r.isAdmin;
+      app.globalData.userInfo = savedUser;
+    }
+    wx.setStorageSync('openid', r.openid);
+    wx.setStorageSync('isAdmin', !!r.isAdmin);
+    wx.setStorageSync('userInfo', savedUser);
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().refreshForRole();
     }
     wx.showToast({ title: '登录成功' });
     this.refreshUser();

@@ -1,5 +1,6 @@
 // 云函数：createBooking —— 云端二次校验并写入 bookings
 const cloud = require('wx-server-sdk');
+const { buildOrderNo } = require('./orderNo');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
@@ -15,10 +16,6 @@ function minToHHmm(n) {
 }
 function overlap(a1, a2, b1, b2) { return a1 < b2 && b1 < a2; }
 function normalizeStaffName(name) { return !name || name === '小美老师' ? '芬芬' : name; }
-function buildOrderNo(date, count) {
-  const datePart = String(date || '').replace(/\D/g, '');
-  return `MOYO${datePart}${String(count + 1).padStart(4, '0')}`;
-}
 function buildVoiceNoticeText(booking) {
   const customer = booking.userSnapshot.nickname || '顾客';
   const phone = booking.userSnapshot.phone ? `，电话${booking.userSnapshot.phone}` : '';
@@ -75,8 +72,7 @@ exports.main = async (event) => {
   // 取用户快照
   const userRes = await db.collection('users').where({ openid: OPENID }).limit(1).get();
   const user = userRes.data[0] || {};
-  const dayCount = await db.collection('bookings').where({ date }).count();
-  const orderNo = buildOrderNo(date, dayCount.total || 0);
+  const orderNo = buildOrderNo(date);
 
   const bookingData = {
     orderNo,
