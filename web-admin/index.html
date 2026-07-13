@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moyo Beauty 电脑后台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main id="loginView" class="login-shell">
+    <section class="login-panel">
+      <div class="brand-mark">
+        <span>Moyo</span>
+        <strong>Beauty</strong>
+      </div>
+      <h1>电脑端预约后台</h1>
+      <p>登录后可处理预约、维护项目，并通过电脑音响播报新预约。</p>
+      <label>
+        API 地址
+        <input id="apiUrlInput" placeholder="https://.../web-admin-api">
+      </label>
+      <label>
+        管理员手机号
+        <input id="phoneInput" inputmode="numeric" placeholder="13600000000">
+      </label>
+      <label>
+        后台密码
+        <input id="passwordInput" type="password" placeholder="请输入后台密码">
+      </label>
+      <button id="loginButton" class="primary-btn">登录后台</button>
+      <p id="loginError" class="error-text"></p>
+    </section>
+  </main>
+
+  <main id="dashboardView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <span>Moyo</span>
+        <strong>Beauty</strong>
+      </div>
+      <button class="nav-item active" data-view="overview">总览</button>
+      <button class="nav-item" data-view="orders">订单</button>
+      <button class="nav-item" data-view="services">项目</button>
+      <button class="nav-item" data-view="staff">美容师</button>
+      <button class="nav-item" data-view="voice">播报</button>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">电脑后台</p>
+          <h2 id="viewTitle">总览</h2>
+        </div>
+        <div class="top-actions">
+          <span id="adminName" class="admin-chip"></span>
+          <button id="refreshButton" class="ghost-btn">刷新</button>
+          <button id="logoutButton" class="ghost-btn danger">退出</button>
+        </div>
+      </header>
+
+      <section id="overviewPanel" class="panel active-panel">
+        <div class="stats-grid">
+          <article class="stat-card"><span>今日预约</span><strong id="statOrders">0</strong></article>
+          <article class="stat-card"><span>今日顾客</span><strong id="statCustomers">0</strong></article>
+          <article class="stat-card"><span>完成收入</span><strong id="statIncome">0</strong></article>
+        </div>
+        <section class="section-block">
+          <div class="section-head">
+            <h3>待处理预约</h3>
+            <button class="ghost-btn" data-view-jump="orders">查看全部</button>
+          </div>
+          <div id="overviewOrders" class="order-list"></div>
+        </section>
+      </section>
+
+      <section id="ordersPanel" class="panel">
+        <div class="toolbar">
+          <select id="statusFilter">
+            <option value="">全部订单</option>
+            <option value="pending">待确认</option>
+            <option value="confirmed">已确认</option>
+            <option value="done">已完成</option>
+            <option value="canceled">已取消</option>
+          </select>
+          <button id="markAllReadButton" class="ghost-btn">全部已读</button>
+        </div>
+        <div id="ordersList" class="order-list"></div>
+      </section>
+
+      <section id="servicesPanel" class="panel">
+        <div class="catalog-layout">
+          <form id="serviceForm" class="editor-form">
+            <h3>项目</h3>
+            <input type="hidden" name="_id">
+            <label>名称<input name="name" required></label>
+            <label>说明<input name="description"></label>
+            <label>时长分钟<input name="durationMin" type="number" min="1" required></label>
+            <label>价格<input name="price" type="number" min="0"></label>
+            <label>排序<input name="sortOrder" type="number"></label>
+            <label class="check-line"><input name="enabled" type="checkbox" checked> 启用</label>
+            <button class="primary-btn" type="submit">保存项目</button>
+            <button class="ghost-btn" type="button" data-reset-form="serviceForm">清空</button>
+          </form>
+          <div id="servicesList" class="catalog-list"></div>
+        </div>
+      </section>
+
+      <section id="staffPanel" class="panel">
+        <div class="catalog-layout">
+          <form id="staffForm" class="editor-form">
+            <h3>美容师</h3>
+            <input type="hidden" name="_id">
+            <label>姓名<input name="name" required></label>
+            <label>头像地址<input name="avatar"></label>
+            <label>简介<input name="title"></label>
+            <label>排序<input name="sortOrder" type="number"></label>
+            <label class="check-line"><input name="enabled" type="checkbox" checked> 启用</label>
+            <button class="primary-btn" type="submit">保存美容师</button>
+            <button class="ghost-btn" type="button" data-reset-form="staffForm">清空</button>
+          </form>
+          <div id="staffList" class="catalog-list"></div>
+        </div>
+      </section>
+
+      <section id="voicePanel" class="panel">
+        <div class="voice-card">
+          <div>
+            <h3>预约播报</h3>
+            <p id="voiceStatus">未开始监听。</p>
+          </div>
+          <div class="voice-actions">
+            <button id="startVoiceButton" class="primary-btn">开始监听</button>
+            <button id="stopVoiceButton" class="ghost-btn">暂停</button>
+            <button id="testVoiceButton" class="ghost-btn">测试声音</button>
+          </div>
+        </div>
+        <div id="voiceQueue" class="order-list"></div>
+      </section>
+
+      <p id="globalError" class="error-text"></p>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
