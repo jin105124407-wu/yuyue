@@ -22,5 +22,10 @@ assert.ok(html.includes('data-view="voice"'), 'voice navigation should exist');
 assert.ok(js.includes('async function apiCall'), 'apiCall should exist');
 assert.ok(js.includes('function startVoicePolling'), 'startVoicePolling should exist');
 assert.ok(js.includes('function playNoticeSound'), 'playNoticeSound should exist');
+assert.ok(js.includes('if (item.voiceNoticeText) return item.voiceNoticeText;'), 'voice notice should prefer saved notice text');
+assert.ok(js.includes('const remark = item.remark ? `，备注${item.remark}` : \'\';'), 'voice notice should include booking remark like mobile admin');
+assert.ok(js.includes('预约${item.serviceName}。时间${item.date} ${item.startTime}。服务美容师${item.staffName}${remark}'), 'new booking voice template should match mobile admin');
+assert.ok(js.includes('window.speechSynthesis.speak(utter);'), 'voice notice should speak the booking text');
+assert.ok(js.includes('新预约提醒。顾客，电话13800000000。预约面部护理。时间2026-07-13 10:00。服务美容师芬芬，备注到店后先咨询'), 'test voice button should speak appointment-style content');
 
 console.log('ok web-admin-static');

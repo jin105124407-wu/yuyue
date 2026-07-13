@@ -315,10 +315,11 @@ function buildNoticeText(item) {
   if (item.voiceNoticeText) return item.voiceNoticeText;
   const customer = customerName(item);
   const phone = customerPhone(item) ? `，电话${customerPhone(item)}` : '';
+  const remark = item.remark ? `，备注${item.remark}` : '';
   if (item.voiceNoticeType === 'canceled' || item.status === 'canceled') {
     return `取消预约提醒。${customer}${phone}。已取消${item.serviceName || '预约项目'}。原预约时间${item.date} ${item.startTime}。服务美容师${item.staffName || '未指定'}`;
   }
-  return `新预约提醒。${customer}${phone}。预约${item.serviceName || '预约项目'}。时间${item.date} ${item.startTime}。服务美容师${item.staffName || '芬芬'}`;
+  return `新预约提醒。${customer}${phone}。预约${item.serviceName}。时间${item.date} ${item.startTime}。服务美容师${item.staffName}${remark}`;
 }
 
 function playNoticeSound(text, type) {
@@ -389,7 +390,7 @@ function bindEvents() {
   $$('[data-reset-form]').forEach(btn => btn.addEventListener('click', () => resetForm(btn.dataset.resetForm)));
   $('#startVoiceButton').addEventListener('click', startVoicePolling);
   $('#stopVoiceButton').addEventListener('click', stopVoicePolling);
-  $('#testVoiceButton').addEventListener('click', () => playNoticeSound('这是一条测试预约播报。请确认电脑音响已经打开。', 'new'));
+  $('#testVoiceButton').addEventListener('click', () => playNoticeSound('新预约提醒。顾客，电话13800000000。预约面部护理。时间2026-07-13 10:00。服务美容师芬芬，备注到店后先咨询', 'new'));
   document.body.addEventListener('click', event => {
     const orderAction = event.target.dataset.orderAction;
     const orderId = event.target.dataset.id;
